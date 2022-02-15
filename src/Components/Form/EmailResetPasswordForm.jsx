@@ -8,6 +8,7 @@ class EmailResetPasswordForm extends React.Component{
     render(){
         return <div className={styles.form}>
             <h1 className={styles.title} >Forgot your password?</h1>
+            <p className={styles.titleComment}>It's okay, we got you! What's your email address?</p>
             <FormTextField label="Email" type="text" id="email"/>
             <div className={styles.groupForm}>
                 <button className={styles.button}>Reset password</button>

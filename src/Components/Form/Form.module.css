@@ -88,3 +88,11 @@
     padding: 10px;
     text-align: center;
 }
+
+.titleComment{
+    width: 70%;
+    text-align: center;
+    color: #8b8b8b;
+    padding: 5px;
+    font-size: 16px;
+}
