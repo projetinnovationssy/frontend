@@ -16,7 +16,7 @@ class SignInForm extends React.Component{
             <div className={styles.groupForm}>
                 <button className={styles.button}>Log in</button>
             </div>
-            <div className="form-group">Don't have an account <a href="#" className={styles.link}>Sign up</a></div>
+            <div className={styles.groupForm2}>Don't have an account <a href="#" className={styles.link}>Sign up</a></div>
         </div>
     }
 }
