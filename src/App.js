@@ -1,8 +1,9 @@
+import SignInForm from "./Components/Form/SignInForm";
 
 function App() {
   return (
     <div className="App">
-      Hello Fast Cast
+        <SignInForm/>
     </div>
   );
 }
