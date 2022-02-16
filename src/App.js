@@ -3,6 +3,7 @@ import ResetPasswordForm from "./Components/Form/ResetPasswordForm";
 import EmailResetPasswordForm from "./Components/Form/EmailResetPasswordForm";
 import SignUpForm from "./Components/Form/SignUpForm";
 import SideBar from "./Components/SideBar/SabeBar";
+import CoreBox from "./Components/CoreBox/CoreBox";
 import "./css/App.css"
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
     </div>*/
     <div className="App">
         <SideBar/>
+        <CoreBox/>
     </div>
   );
 }
