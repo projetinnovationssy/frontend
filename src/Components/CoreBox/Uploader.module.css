@@ -1,0 +1,109 @@
+.absoluteBox{
+    position: absolute;
+    z-index: 100;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000067;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.icon{
+    color: #A4ADBA;
+    font-size: 40px;
+}
+.uploader{
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px #585858;
+    padding: 20px;
+    width: 80%;
+    max-width: 700px;
+}
+
+.Uphead{
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+}
+.drag{
+    padding: 15px;
+    border-radius: 5px;
+    border:#B6BDCB 1px dashed ;
+    background-color: #F8F9FB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+}
+.h2{
+    font-size: 19px;
+    font-family: 'Roboto';
+    padding: 5px;
+}
+.h1{
+    font-size: 15px;
+}
+
+.closebutton{
+    transition: 0.2s;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    padding:  4px 4px 2px;
+}
+
+.closebutton:hover{
+        transform: scale(1.3);
+        cursor:pointer;
+        background-color: #e9e9e9;
+}
+.closebutton:active{
+    transform: scale(1);
+}
+
+.p{
+    margin: 10px;
+    text-align: center;
+    color: #A4ADBA;
+    margin-bottom: 40px;
+}
+
+
+
+.EmtyBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.button{
+    padding: 12px 24px;
+    background: #005FFC;
+    border-radius: 8px;
+    font-size: 15px;
+    padding: 12px 20px;
+    text-align: center;
+    color: #FFFFFF;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+}
+
+.button:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+.button:active{
+    transform: scale(1);
+}
