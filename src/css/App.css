@@ -6,7 +6,7 @@
 body{
     background: #F8F9FB;
 }
-.App{
+.AppForm{
     /* MacBook Pro - 2 */
     /* Auto layout */
     display: flex;
@@ -14,5 +14,9 @@ body{
     align-items: center;
     padding: 100px 473px;
     position: relative;
+}
+
+.App{
+    height: 750px;
 }
 
