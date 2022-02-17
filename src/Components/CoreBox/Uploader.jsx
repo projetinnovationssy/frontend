@@ -7,8 +7,7 @@ import Upstyles from "./Uploader.module.css"
 class Uploader extends React.Component{
 
     render(){
-        return <div className={Upstyles.absoluteBox}>
-                <div className={Upstyles.uploader}>
+        return  <div className={Upstyles.uploader}>
                     <div className={Upstyles.Uphead}>
                         <h1 className={Upstyles.h2}>Upload new {this.props.fileType}</h1>
                         <button className={Upstyles.closebutton} ><GrClose /></button>
@@ -20,8 +19,6 @@ class Uploader extends React.Component{
                         <button className={styles.button}>Select a file</button>
                     </div>
                 </div>
-
-        </div>
     }
 }
 
