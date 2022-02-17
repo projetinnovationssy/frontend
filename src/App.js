@@ -5,17 +5,52 @@ import SignUpForm from "./Components/Form/SignUpForm";
 import SideBar from "./Components/SideBar/SabeBar";
 import CoreBox from "./Components/CoreBox/CoreBox";
 import "./css/App.css";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
 
-function App() {
-  return (
-  /*<div className="AppForm">
-        <SignUpForm/>
-    </div>*/
-    <div className="App">
-        <SideBar/>
-        <CoreBox/>
-    </div>
-  );
+class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      token: null
+    }
+    this.setToken = this.setToken.bind(this)
+  }
+
+  validateToken(token){
+    if(token != ""){
+      return true
+    }
+    return false
+  }
+
+  setToken(token){
+    this.setState({token})
+  }
+
+  render() {
+    if (this.state.token != null) {
+      if (this.validateToken(this.state.token)) {
+        return <div className="App">
+          <SideBar />
+          <CoreBox />
+        </div>
+      }
+    }
+    return <div className="AppForm">
+        <Router>
+          <Routes>
+            <Route path="/login" element={<SignInForm onLogin = {this.setToken}/>}/>
+            <Route path="/signup" element={<SignUpForm onSignUp = {this.setToken}/>}/>
+          </Routes>
+        </Router>
+      </div>
+  }
 }
 
 export default App;

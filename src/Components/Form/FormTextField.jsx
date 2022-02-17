@@ -9,8 +9,8 @@ class FormTextField extends React.Component{
 
     render(){
         return <div className={styles.groupForm}>
-        <label  htmlFor={this.props.id} className="form-label">{this.props.label}</label>
-        <input type={this.props.type} className="form-input" id={this.props.id}/>
+        <label  htmlFor={this.props.id} className="form-label" >{this.props.label}</label>
+        <input type={this.props.type} className="form-input" id={this.props.id} ref = {this.props.refence}/>
     </div>
     }
 }
