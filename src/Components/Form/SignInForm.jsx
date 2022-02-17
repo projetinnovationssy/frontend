@@ -32,7 +32,7 @@ class SignInForm extends React.Component{
             <FormTextField label="Email" type="text" id="email" refence = {this.email} />
             <FormTextField label="Password" type="password" id="passord" refence = {this.password}/>
             <div className={styles.groupForm}>
-                <Link to="#" className={styles.link}>Forgot your password?</Link>
+                <Link to="/reset" className={styles.link}>Forgot your password?</Link>
             </div>
             <div className={styles.groupForm}>
                 <button className={styles.button} onClick = {this.handleSubmit}>Log in</button>

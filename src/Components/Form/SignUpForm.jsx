@@ -9,7 +9,7 @@ class SignUpForm extends React.Component{
     }
     render(){
         return <div className={styles.form}>
-            <h1 className={styles.title} >Forgot your password?</h1>
+            <h1 className={styles.title} >Sign in to start uploading videos</h1>
             <FormTextField label="Name" type="text" id="text"/>
             <FormTextField label="Email" type="text" id="email"/>
             <FormTextField label="Password" type="text" id="password"/>

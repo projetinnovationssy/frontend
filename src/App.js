@@ -47,6 +47,7 @@ class App extends React.Component {
           <Routes>
             <Route path="/login" element={<SignInForm onLogin = {this.setToken}/>}/>
             <Route path="/signup" element={<SignUpForm onSignUp = {this.setToken}/>}/>
+            <Route path="/reset" element={<EmailResetPasswordForm onSignUp = {this.setToken}/>}/>
           </Routes>
         </Router>
       </div>

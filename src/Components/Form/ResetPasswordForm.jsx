@@ -10,7 +10,7 @@ class ResetPasswordForm extends React.Component{
         return <div className={styles.form}>
             <h1 className={styles.title} >Reset your password</h1>
             <FormTextField label="Password" type="password" id="password1"/>
-            <FormTextField label="Password" type="password" id="password2"/>
+            <FormTextField label="Confirm your Password" type="password" id="password2"/>
             <div className={styles.groupForm}>
                 <button className={styles.button}>Submit</button>
             </div>
