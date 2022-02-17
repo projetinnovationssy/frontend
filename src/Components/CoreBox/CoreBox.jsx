@@ -1,63 +1,75 @@
 import React from "react";
 import styles from "./CoreBox.module.css"
-import EmptyList from "./EmptyList" 
+import EmptyList from "./EmptyList"
 import Uploader from "./Uploader";
 import PopUp from "./PopUp";
 import VideoGrid from "./VideoGrid";
 import VIdeoItem from "./VIdeoItem";
 import DeleteConfirmer from "./DeleteConfirmer";
-class CoreBox extends React.Component{
-    constructor(props){
+import {
+    Route,
+    Routes,
+    Navigate 
+} from "react-router-dom";
+class CoreBox extends React.Component {
+    constructor(props) {
         super(props)
         this.state = {
             popUp: false
         }
         this.onAddVideoClick = this.onAddVideoClick.bind(this)
-        this.onPopUpClose =this.onPopUpClose.bind(this)
-        this.popUpElement = <Uploader fileType = "video" onClose = {this.onPopUpClose}/>
+        this.onPopUpClose = this.onPopUpClose.bind(this)
+        this.popUpElement = <Uploader fileType="video" onClose={this.onPopUpClose} />
     }
 
-    getPopUp(){
-            return this.popUpElement
+    getPopUp() {
+        return this.popUpElement
     }
 
-    onAddVideoClick(){
-        this.setState({popUp: true})
+    onAddVideoClick() {
+        this.setState({ popUp: true })
     }
 
-    onPopUpClose(){
-        this.setState({popUp: false})
+    onPopUpClose() {
+        this.setState({ popUp: false })
 
     }
 
-    render(){
+    videoGrid() {
+        return <VideoGrid >
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+            <VIdeoItem thumbnail="./thumb.jpg" />
+        </VideoGrid>
+    }
+
+    render() {
         return <div className={styles.coreBox}>
-                {this.state.popUp?<PopUp>
-                    {this.getPopUp()}
-                </PopUp>: null}
-                <div className={styles.title}>My Videos <button className={styles.button} onClick = {this.onAddVideoClick} style = {{padding: "8px 25px"}}>Add video</button></div>
-                <VideoGrid >
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                    <VIdeoItem thumbnail = "./thumb.jpg"/>
-                </VideoGrid>
+            {this.state.popUp ? <PopUp>
+                {this.getPopUp()}
+            </PopUp> : null}
+            <div className={styles.title}>My Videos <button className={styles.button} onClick={this.onAddVideoClick} style={{ padding: "8px 25px" }}>Add video</button></div>    
+            <Routes>
+                <Route path="/myvideos" element={this.videoGrid()} />
+                <Route path="/" element = {<Navigate to='/myvideos'/>} />
+            </Routes>
 
         </div>
     }

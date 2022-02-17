@@ -18,7 +18,7 @@ class SideBar extends React.Component{
         return <div className={styles.sideBar}>
            <div>
                <h1 className={styles.siteTitle}>FASTcast</h1>
-                <BarItem className={  this.state.Currentsection == "myVideos" ? styles.bareItemOn : null}>
+                <BarItem to ="#" className={  this.state.Currentsection == "myVideos" ? styles.bareItemOn : null}>
                     <FaUserLock className={styles.icon}/> My videos
                 </BarItem>
                 <BarItem>

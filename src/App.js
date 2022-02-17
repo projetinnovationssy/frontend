@@ -51,8 +51,11 @@ class App extends React.Component {
     if (this.state.token != null) {
       if (this.validateToken(this.state.token)) {
         return <div className="App">
-          <SideBar logoutCallback = {this.logout} />
-          <CoreBox />
+          <Router>
+              <SideBar logoutCallback = {this.logout} />
+              <CoreBox />
+          </Router>
+
         </div>
       }
     }

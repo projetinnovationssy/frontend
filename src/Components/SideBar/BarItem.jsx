@@ -1,13 +1,20 @@
 import React from "react"
 import styles from "./SideBar.module.css"
-
+import {
+    Link
+  } from "react-router-dom";
 
 class BarItem extends React.Component{
 
     render(){
-        return <button onClick = {this.props.logoutCallback} className= {styles.bareItem + " " + this.props.className}>
+        if (this.props.to != null){
+            return <Link to = {this.props.to} onClick = {this.props.logoutCallback} className= {styles.bareItem + " " + this.props.className}>
             {this.props.children}
-        </button>
+        </Link>
+        }
+        return <button onClick = {this.props.logoutCallback} className= {styles.bareItem + " " + this.props.className}>
+        {this.props.children}
+    </button>
     }
 
 }
