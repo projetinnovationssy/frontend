@@ -36,7 +36,6 @@ class CoreBox extends React.Component{
                     <VIdeoItem thumbnail = "./thumb.jpg"/>
                 </VideoGrid>
 
-
         </div>
     }
 }
@@ -51,4 +50,7 @@ export default CoreBox;
             <Uploader fileType = "video"/>
         </PopUp>
         <EmptyList/>
+        <PopUp>
+            <DeleteConfirmer/>
+        </PopUp>
 */

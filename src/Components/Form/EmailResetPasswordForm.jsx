@@ -1,6 +1,7 @@
 import React from "react";
 import FormTextField from "./FormTextField";
 import styles from "./Form.module.css"
+import {Link} from "react-router-dom"
 class EmailResetPasswordForm extends React.Component{
     constructor(props){
         super(props)
@@ -13,7 +14,7 @@ class EmailResetPasswordForm extends React.Component{
             <div className={styles.groupForm}>
                 <button className={styles.button}>Reset password</button>
             </div>
-            <div className={styles.groupForm2}>Oh whait! remembred! <div className={styles.newLine}>Back to <a href="#" className={styles.link}>Sign up</a></div></div>
+            <div className={styles.groupForm2}>Oh whait! remembred! <div className={styles.newLine}>Back to <Link to="/login" className={styles.link}>Sign up</Link></div></div>
         </div>
     }
 }
