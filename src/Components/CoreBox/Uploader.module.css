@@ -10,6 +10,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    animation: smooth 0.5s;
+}
+@keyframes smooth {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 100%;
+    }
 }
 .icon{
     color: #A4ADBA;

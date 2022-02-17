@@ -10,7 +10,7 @@ class Uploader extends React.Component{
         return  <div className={Upstyles.uploader}>
                     <div className={Upstyles.Uphead}>
                         <h1 className={Upstyles.h2}>Upload new {this.props.fileType}</h1>
-                        <button className={Upstyles.closebutton} ><GrClose /></button>
+                        <button className={Upstyles.closebutton} onClick = {this.props.onClose} ><GrClose /></button>
                     </div>
                     <div className={Upstyles.drag}>
                         <FaVideo className={Upstyles.icon}/>

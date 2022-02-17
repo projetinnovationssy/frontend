@@ -17,22 +17,30 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      token: null
+      token: localStorage.getItem("token")
     }
     this.setToken = this.setToken.bind(this)
     this.logout = this.logout.bind(this)
+    
   }
 
   validateToken(token){
     if(token != ""){
+      localStorage.setItem("token", "samir")
       return true
     }
     return false
   }
 
+  serverLogOut(){
+    return true
+  }
+
   logout(){
-    this.setState({token: null})
-    console.log("ok")
+    if(this.serverLogOut()){
+      localStorage.removeItem("token")
+      this.setState({token: null})
+    }
   }
 
   setToken(token){

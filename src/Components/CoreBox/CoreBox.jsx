@@ -9,10 +9,33 @@ import DeleteConfirmer from "./DeleteConfirmer";
 class CoreBox extends React.Component{
     constructor(props){
         super(props)
+        this.state = {
+            popUp: false
+        }
+        this.onAddVideoClick = this.onAddVideoClick.bind(this)
+        this.onPopUpClose =this.onPopUpClose.bind(this)
+        this.popUpElement = <Uploader fileType = "video" onClose = {this.onPopUpClose}/>
     }
+
+    getPopUp(){
+            return this.popUpElement
+    }
+
+    onAddVideoClick(){
+        this.setState({popUp: true})
+    }
+
+    onPopUpClose(){
+        this.setState({popUp: false})
+
+    }
+
     render(){
         return <div className={styles.coreBox}>
-                <div className={styles.title}>My Videos <button className={styles.button} style = {{padding: "8px 25px"}}>Add video</button></div>
+                {this.state.popUp?<PopUp>
+                    {this.getPopUp()}
+                </PopUp>: null}
+                <div className={styles.title}>My Videos <button className={styles.button} onClick = {this.onAddVideoClick} style = {{padding: "8px 25px"}}>Add video</button></div>
                 <VideoGrid >
                     <VIdeoItem thumbnail = "./thumb.jpg"/>
                     <VIdeoItem thumbnail = "./thumb.jpg"/>
