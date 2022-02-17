@@ -5,9 +5,9 @@ import styles from "./SideBar.module.css"
 class BarItem extends React.Component{
 
     render(){
-        return <div className= {styles.bareItem + " " + this.props.className}>
+        return <button onClick = {this.props.logoutCallback} className= {styles.bareItem + " " + this.props.className}>
             {this.props.children}
-        </div>
+        </button>
     }
 
 }

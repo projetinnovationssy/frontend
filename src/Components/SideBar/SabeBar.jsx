@@ -28,7 +28,7 @@ class SideBar extends React.Component{
                     <IoMdSettings className={styles.icon}/> Settings
                 </BarItem>
            </div>
-            <BarItem>
+            <BarItem logoutCallback = {this.props.logoutCallback}>
                 <IoLogIn className={styles.icon}/> Log out
             </BarItem>
         </div>

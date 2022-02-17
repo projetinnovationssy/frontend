@@ -20,6 +20,7 @@ class App extends React.Component {
       token: null
     }
     this.setToken = this.setToken.bind(this)
+    this.logout = this.logout.bind(this)
   }
 
   validateToken(token){
@@ -27,6 +28,11 @@ class App extends React.Component {
       return true
     }
     return false
+  }
+
+  logout(){
+    this.setState({token: null})
+    console.log("ok")
   }
 
   setToken(token){
@@ -37,7 +43,7 @@ class App extends React.Component {
     if (this.state.token != null) {
       if (this.validateToken(this.state.token)) {
         return <div className="App">
-          <SideBar />
+          <SideBar logoutCallback = {this.logout} />
           <CoreBox />
         </div>
       }

@@ -21,6 +21,10 @@
     width: 100%;
     box-sizing: border-box;
     color: #A4ADBA;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: transparent;
 }
 .bareItem:hover{
     cursor: pointer;
