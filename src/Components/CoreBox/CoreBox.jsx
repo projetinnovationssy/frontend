@@ -5,13 +5,14 @@ import Uploader from "./Uploader";
 import PopUp from "./PopUp";
 import VideoGrid from "./VideoGrid";
 import VIdeoItem from "./VIdeoItem";
+import DeleteConfirmer from "./DeleteConfirmer";
 class CoreBox extends React.Component{
     constructor(props){
         super(props)
     }
     render(){
         return <div className={styles.coreBox}>
-                <div className={styles.title}>My Videos</div>
+                <div className={styles.title}>My Videos <button className={styles.button} style = {{padding: "8px 25px"}}>Add video</button></div>
                 <VideoGrid >
                     <VIdeoItem thumbnail = "./thumb.jpg"/>
                     <VIdeoItem thumbnail = "./thumb.jpg"/>
@@ -34,6 +35,10 @@ class CoreBox extends React.Component{
                     <VIdeoItem thumbnail = "./thumb.jpg"/>
                     <VIdeoItem thumbnail = "./thumb.jpg"/>
                 </VideoGrid>
+                <PopUp>
+                    <DeleteConfirmer/>
+                </PopUp>
+
         </div>
     }
 }
@@ -41,6 +46,7 @@ class CoreBox extends React.Component{
 export default CoreBox;
 
 /*git 
+
         <PopUp>
             <Uploader fileType = "video"/>
         </PopUp>
