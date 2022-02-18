@@ -17,9 +17,7 @@ class CoreBox extends React.Component {
         this.state = {
             popUp: false,
             videoList: [
-                {
-                    thumbnail: "thumb.jpg"
-                }
+
             ]
         }
         this.onAddVideoClick = this.onAddVideoClick.bind(this)
@@ -50,12 +48,12 @@ class CoreBox extends React.Component {
                     ))}
                 </VideoGrid>
             </React.StrictMode>
-        }else return <EmptyList />
+        }else return <EmptyList onAddVideoClick = {this.onAddVideoClick} />
 
     }
 
     getList() {
-        return <EmptyList />
+        return <EmptyList onAddVideoClick = {this.onAddVideoClick} />
     }
 
     render() {
@@ -88,4 +86,8 @@ export default CoreBox;
         <PopUp>
             <DeleteConfirmer/>
         </PopUp>
+
+                        {
+                    thumbnail: "thumb.jpg"
+                }
 */

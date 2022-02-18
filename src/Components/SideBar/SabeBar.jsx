@@ -4,35 +4,36 @@ import {FaVideo, FaUserLock}  from 'react-icons/fa';
 import {IoMdSettings} from "react-icons/io";
 import {IoLogIn} from "react-icons/io5";
 import styles from "./SideBar.module.css"
+import { tab } from "@testing-library/user-event/dist/tab";
 
 class SideBar extends React.Component{
 
     constructor(props){
         super(props)
         this.state = {
-            Currentsection : "myVideos"
+            Currentsection : window.location.pathname
         }
     }
     setCurrent(current){
-        this.setState({Currentsection : current})
+        this.setState({Currentsection : window.location.pathname})
     }
     render(){
         return <div className={styles.sideBar}>
            <div>
                <h1 className={styles.siteTitle}>FASTcast</h1>
                 <BarItem to ="/myvideos" 
-                         className={  this.state.Currentsection == "myVideos" ? styles.bareItemOn : null}
-                         onClick = {()=>this.setCurrent("myVideos")}>
+                         className={  this.state.Currentsection == "/myvideos" ? styles.bareItemOn : null}
+                         onClick = {this.setCurrent}>
                     <FaUserLock className={styles.icon}/> My videos
                 </BarItem>
                 <BarItem to ="/videos" 
-                        className={  this.state.Currentsection == "videos" ? styles.bareItemOn : null}
-                        onClick = {()=>this.setCurrent("videos")}>
+                        className={  this.state.Currentsection == "/videos" ? styles.bareItemOn : null}
+                        onClick = {this.setCurrent}>
                     <FaVideo className={styles.icon}/> public videos
                 </BarItem>
                 <BarItem to ="/settings" 
-                        className={  this.state.Currentsection == "settings" ? styles.bareItemOn : null}
-                        onClick = {()=>this.setCurrent("settings")}>
+                        className={  this.state.Currentsection == "/settings" ? styles.bareItemOn : null}
+                        onClick = {this.setCurrent}>
                     <IoMdSettings className={styles.icon}/> Settings
                 </BarItem>
            </div>

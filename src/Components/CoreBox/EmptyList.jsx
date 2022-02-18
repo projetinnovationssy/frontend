@@ -11,7 +11,7 @@ class EmptyList extends React.Component{
                 <div className={styles.elipse}></div>
                 <h1 className={styles.h1}>You have no video!</h1>
                 <p className={styles.p}>Sorry! there are no videos in your list, but you can download some! please go ahead and click add video below.</p>
-                <button className={styles.button}>Add video</button>
+                <button className={styles.button} onClick = {this.props.onAddVideoClick}>Add video</button>
         </div>
     }
 }
