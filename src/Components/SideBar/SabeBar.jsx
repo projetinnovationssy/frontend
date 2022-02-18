@@ -10,29 +10,27 @@ class SideBar extends React.Component{
 
     constructor(props){
         super(props)
-        this.state = {
-            Currentsection : window.location.pathname
-        }
+        this.Currentsection =  window.location.pathname
     }
-    setCurrent(current){
-        this.setState({Currentsection : window.location.pathname})
+    setCurrent(){
+        this.Currentsection =  window.location.pathname
     }
     render(){
         return <div className={styles.sideBar}>
            <div>
                <h1 className={styles.siteTitle}>FASTcast</h1>
                 <BarItem to ="/myvideos" 
-                         className={  this.state.Currentsection == "/myvideos" ? styles.bareItemOn : null}
+                         className={  this.Currentsection == "/myvideos" ? styles.bareItemOn : null}
                          onClick = {this.setCurrent}>
                     <FaUserLock className={styles.icon}/> My videos
                 </BarItem>
                 <BarItem to ="/videos" 
-                        className={  this.state.Currentsection == "/videos" ? styles.bareItemOn : null}
+                        className={  this.Currentsection == "/videos" ? styles.bareItemOn : null}
                         onClick = {this.setCurrent}>
                     <FaVideo className={styles.icon}/> public videos
                 </BarItem>
                 <BarItem to ="/settings" 
-                        className={  this.state.Currentsection == "/settings" ? styles.bareItemOn : null}
+                        className={  this.Currentsection == "/settings" ? styles.bareItemOn : null}
                         onClick = {this.setCurrent}>
                     <IoMdSettings className={styles.icon}/> Settings
                 </BarItem>
