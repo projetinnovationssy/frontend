@@ -9,7 +9,8 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Navigate
 } from "react-router-dom";
 
 class App extends React.Component {
@@ -47,27 +48,29 @@ class App extends React.Component {
     this.setState({token})
   }
 
-  render() {
+  Prerender() {
     if (this.state.token != null) {
       if (this.validateToken(this.state.token)) {
         return <div className="App">
-          <Router>
               <SideBar logoutCallback = {this.logout} />
               <CoreBox />
-          </Router>
-
         </div>
       }
     }
-    return <div className="AppForm">
-        <Router>
+    return <div className="AppForm">  
           <Routes>
             <Route path="/login" element={<SignInForm onLogin = {this.setToken}/>}/>
             <Route path="/signup" element={<SignUpForm onSignUp = {this.setToken}/>}/>
             <Route path="/reset" element={<EmailResetPasswordForm onSignUp = {this.setToken}/>}/>
+            <Route path="*" element = {<Navigate to="/login"/>} />
           </Routes>
-        </Router>
       </div>
+  }
+
+  render(){
+    return <Router>
+        {this.Prerender()}
+    </Router>
   }
 }
 

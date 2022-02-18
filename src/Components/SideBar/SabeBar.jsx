@@ -10,10 +10,14 @@ class SideBar extends React.Component{
 
     constructor(props){
         super(props)
-        this.Currentsection =  window.location.pathname
+        if(window.location.pathname == "/login"){
+            this.Currentsection = "/myvideos"
+        }
+        else this.Currentsection = window.location.pathname
+        
     }
     setCurrent(){
-        this.Currentsection =  window.location.pathname
+        this.Currentsection = window.location.pathname
     }
     render(){
         return <div className={styles.sideBar}>

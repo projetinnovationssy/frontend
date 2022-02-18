@@ -63,10 +63,10 @@ class CoreBox extends React.Component {
             </PopUp> : null}
 
             <Routes>
+                <Route path="/login" element={<Navigate to='/myvideos' />} />
                 <Route path="/myvideos" element={this.myVideoList()} />
                 <Route path="/" element={<Navigate to='/myvideos' />} />
                 <Route path="/videos" element={this.getList()} />
-
             </Routes>
 
         </div>
