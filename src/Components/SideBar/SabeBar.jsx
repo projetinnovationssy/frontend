@@ -10,25 +10,33 @@ class SideBar extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            Currentsection :"myVideos"
+            Currentsection : "myVideos"
         }
     }
-
+    setCurrent(current){
+        this.setState({Currentsection : current})
+    }
     render(){
         return <div className={styles.sideBar}>
            <div>
                <h1 className={styles.siteTitle}>FASTcast</h1>
-                <BarItem to ="#" className={  this.state.Currentsection == "myVideos" ? styles.bareItemOn : null}>
+                <BarItem to ="/myvideos" 
+                         className={  this.state.Currentsection == "myVideos" ? styles.bareItemOn : null}
+                         onClick = {()=>this.setCurrent("myVideos")}>
                     <FaUserLock className={styles.icon}/> My videos
                 </BarItem>
-                <BarItem>
+                <BarItem to ="/videos" 
+                        className={  this.state.Currentsection == "videos" ? styles.bareItemOn : null}
+                        onClick = {()=>this.setCurrent("videos")}>
                     <FaVideo className={styles.icon}/> public videos
                 </BarItem>
-                <BarItem>
+                <BarItem to ="/settings" 
+                        className={  this.state.Currentsection == "settings" ? styles.bareItemOn : null}
+                        onClick = {()=>this.setCurrent("settings")}>
                     <IoMdSettings className={styles.icon}/> Settings
                 </BarItem>
            </div>
-            <BarItem logoutCallback = {this.props.logoutCallback}>
+            <BarItem onClick = {this.props.logoutCallback}>
                 <IoLogIn className={styles.icon}/> Log out
             </BarItem>
         </div>

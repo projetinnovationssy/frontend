@@ -9,13 +9,18 @@ import DeleteConfirmer from "./DeleteConfirmer";
 import {
     Route,
     Routes,
-    Navigate 
+    Navigate
 } from "react-router-dom";
 class CoreBox extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            popUp: false
+            popUp: false,
+            videoList: [
+                {
+                    thumbnail: "thumb.jpg"
+                }
+            ]
         }
         this.onAddVideoClick = this.onAddVideoClick.bind(this)
         this.onPopUpClose = this.onPopUpClose.bind(this)
@@ -35,29 +40,22 @@ class CoreBox extends React.Component {
 
     }
 
-    videoGrid() {
-        return <VideoGrid >
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-            <VIdeoItem thumbnail="./thumb.jpg" />
-        </VideoGrid>
+    myVideoList() {
+        if (this.state.videoList.length != 0) {
+            return <React.StrictMode>
+                <div className={styles.title}>My Videos <button className={styles.button} onClick={this.onAddVideoClick} style={{ padding: "8px 25px" }}>Add video</button></div>
+                <VideoGrid >
+                    {this.state.videoList.map((value, index)=>(
+                        <VIdeoItem thumbnail = {value.thumbnail} key = {index}/>
+                    ))}
+                </VideoGrid>
+            </React.StrictMode>
+        }else return <EmptyList />
+
+    }
+
+    getList() {
+        return <EmptyList />
     }
 
     render() {
@@ -65,10 +63,12 @@ class CoreBox extends React.Component {
             {this.state.popUp ? <PopUp>
                 {this.getPopUp()}
             </PopUp> : null}
-            <div className={styles.title}>My Videos <button className={styles.button} onClick={this.onAddVideoClick} style={{ padding: "8px 25px" }}>Add video</button></div>    
+
             <Routes>
-                <Route path="/myvideos" element={this.videoGrid()} />
-                <Route path="/" element = {<Navigate to='/myvideos'/>} />
+                <Route path="/myvideos" element={this.myVideoList()} />
+                <Route path="/" element={<Navigate to='/myvideos' />} />
+                <Route path="/videos" element={this.getList()} />
+
             </Routes>
 
         </div>
@@ -84,7 +84,7 @@ export default CoreBox;
         <PopUp>
             <Uploader fileType = "video"/>
         </PopUp>
-        <EmptyList/>
+        
         <PopUp>
             <DeleteConfirmer/>
         </PopUp>
