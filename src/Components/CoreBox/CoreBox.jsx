@@ -11,13 +11,17 @@ import {
     Routes,
     Navigate
 } from "react-router-dom";
+import Settings from "./Settings";
+
 class CoreBox extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             popUp: false,
             videoList: [
-
+                {
+                    thumbnail: "thumb.jpg"
+                }
             ]
         }
         this.onAddVideoClick = this.onAddVideoClick.bind(this)
@@ -63,10 +67,12 @@ class CoreBox extends React.Component {
             </PopUp> : null}
 
             <Routes>
+                <Route path="/" element={<Navigate to='/myvideos' />} />
                 <Route path="/login" element={<Navigate to='/myvideos' />} />
                 <Route path="/myvideos" element={this.myVideoList()} />
-                <Route path="/" element={<Navigate to='/myvideos' />} />
                 <Route path="/videos" element={this.getList()} />
+                <Route path="/settings" element={<Settings/>} />
+
             </Routes>
 
         </div>

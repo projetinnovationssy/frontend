@@ -4,7 +4,6 @@ import {FaVideo, FaUserLock}  from 'react-icons/fa';
 import {IoMdSettings} from "react-icons/io";
 import {IoLogIn} from "react-icons/io5";
 import styles from "./SideBar.module.css"
-import { tab } from "@testing-library/user-event/dist/tab";
 
 class SideBar extends React.Component{
 
