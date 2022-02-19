@@ -62,7 +62,9 @@ class PublicVideoList extends React.Component{
                     ))}
                 </VideoGrid>
             </React.StrictMode>
-        }else return <EmptyList onAddVideoClick = {this.onAddVideoClick} />
+        }else return <EmptyList 
+                title = "There is no public videos!"
+                description = "public videos are not available at the moment!" />
     }
 
 }

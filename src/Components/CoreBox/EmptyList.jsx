@@ -9,9 +9,9 @@ class EmptyList extends React.Component{
         return <div className={styles.EmtyBox}>
                 <img className={styles.img} src="./empty.png" alt="" />
                 <div className={styles.elipse}></div>
-                <h1 className={styles.h1}>You have no video!</h1>
-                <p className={styles.p}>Sorry! there are no videos in your list, but you can download some! please go ahead and click add video below.</p>
-                <button className={styles.button} onClick = {this.props.onAddVideoClick}>Add video</button>
+                <h1 className={styles.h1}>{this.props.title}</h1>
+                <p className={styles.p}>{this.props.description}</p>
+                {this.props.onAddVideoClick? <button className={styles.button} onClick = {this.props.onAddVideoClick}>Add video</button> : null}
         </div>
     }
 }

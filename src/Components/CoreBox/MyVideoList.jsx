@@ -13,8 +13,7 @@ class MyVideoList extends React.Component {
         super(props)
         this.state = {
             popUp: false,
-            videoList: [
-            ]
+            videoList: null
         }
         this.onAddVideoClick = this.onAddVideoClick.bind(this)
         this.onPopUpClose = this.onPopUpClose.bind(this)
@@ -60,6 +59,9 @@ class MyVideoList extends React.Component {
     }
 
     render() {
+        if (this.state.videoList == null) {
+            return <p></p>
+        }
         if (this.state.videoList.length != 0) {
             return <React.StrictMode>
                 {this.state.popUp ? <PopUp>
@@ -75,7 +77,10 @@ class MyVideoList extends React.Component {
                     ))}
                 </VideoGrid>
             </React.StrictMode>
-        } else return <EmptyList onAddVideoClick={this.onAddVideoClick} />
+        } else return <EmptyList 
+                        title = "You have no video!" 
+                        onAddVideoClick={this.onAddVideoClick}
+                        description = "Sorry! there are no videos in your list, but you can download some! please go ahead and click add video below." />
     }
 
 }

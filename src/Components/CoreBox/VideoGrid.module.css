@@ -24,6 +24,9 @@
 .videoItem:hover{
     transform: scale(1.02);
 }
+.videoItem:active{
+    transform: scale(1);
+}
 
 .videoTitle{
     margin: 15px 10px;
