@@ -9,8 +9,8 @@ class VIdeoItem extends React.Component{
             <div className={styles.container}>
                 <p className={styles.videoTitle}>Maher Zain - Qalbi Sajad | Vocals Only ماهر زين - قلبي سجد |</p>
                 <div className={styles.controle}>
-                    <button className={styles.button}>Edit</button>
-                    <button className={styles.delete}>Delete</button>
+                    {this.props.edit ? <button className={styles.button}>Edit</button> : null}
+                    {this.props.delete ? <button className={styles.delete}>Delete</button> : null}
                 </div>
             </div>
         </div> 

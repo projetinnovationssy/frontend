@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./VideoGrid.module.css"
 import CoreBoxstyles from "./CoreBox.module.css"
 import axios from "axios";
 import VideoGrid from "./VideoGrid";
@@ -8,7 +7,7 @@ import PopUp from "./PopUp";
 import EmptyList from "./EmptyList"
 import DeleteConfirmer from "./DeleteConfirmer";
 import Uploader from "./Uploader";
-class MyVideoList extends React.Component{
+class MyVideoList extends React.Component {
 
     constructor(props) {
         super(props)
@@ -38,42 +37,45 @@ class MyVideoList extends React.Component{
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getOwnList()
     }
 
-    getOwnList(){
+    getOwnList() {
         const token = localStorage.getItem("token");
         let conf = {
-            headers:{
-                'Authorization' : "Bearer " + token
+            headers: {
+                'Authorization': "Bearer " + token
             }
         }
         axios.get(this.url, conf)
-        .then((response)=>{
-            if (response.data != null){
-                let videoList = response.data.obj
-                this.setState({videoList})
-            }
-        })
-        .catch((err)=>{
-        })
+            .then((response) => {
+                if (response.data != null) {
+                    let videoList = response.data.obj
+                    this.setState({ videoList })
+                }
+            })
+            .catch((err) => {
+            })
     }
 
-    render(){
+    render() {
         if (this.state.videoList.length != 0) {
             return <React.StrictMode>
                 {this.state.popUp ? <PopUp>
-                {this.getPopUp()}
+                    {this.getPopUp()}
                 </PopUp> : null}
                 <div className={CoreBoxstyles.title}>My Videos <button className={CoreBoxstyles.button} onClick={this.onAddVideoClick} style={{ padding: "8px 25px" }}>Add video</button></div>
                 <VideoGrid >
-                    {this.state.videoList.map((value, index)=>(
-                        <VIdeoItem thumbnail = {value.thumbnail} key = {index}/>
+                    {this.state.videoList.map((value, index) => (
+                        <VIdeoItem thumbnail={value.thumbnail}
+                            key={index}
+                            edit = {()=>{}} 
+                            delete = {()=>{}} />
                     ))}
                 </VideoGrid>
             </React.StrictMode>
-        }else return <EmptyList onAddVideoClick = {this.onAddVideoClick} />
+        } else return <EmptyList onAddVideoClick={this.onAddVideoClick} />
     }
 
 }
