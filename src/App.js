@@ -27,7 +27,7 @@ class App extends React.Component {
 
   validateToken(token){
     if(token != ""){
-      localStorage.setItem("token", "samir")
+      localStorage.setItem("token", token)
       return true
     }
     return false

@@ -23,15 +23,18 @@ class SignUpForm extends React.Component {
     signUp(userData) {
         axios.post(this.url, userData)
             .then((response) => {
+                console.log(response.data)
                 if (response.data.description == "User is Created Successfully") {
                     alert("We have registered you!! you will be redirected to the login page")
                     this.setState({ redirect: true })
+                }else if (response.data.description == "User Alredy Exist") {
+                    alert("We can't register you, User Alredy Exist")
                 } else {
                     alert("We can't register you, verify your information and try again!")
                 }
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error.response)
                 alert("We can't register you, verify your information and try again!")
             })
 

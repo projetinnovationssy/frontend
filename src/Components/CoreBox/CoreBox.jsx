@@ -12,6 +12,9 @@ import {
     Navigate
 } from "react-router-dom";
 import Settings from "./Settings";
+import axios from "axios";
+
+// Add a request interceptor
 
 class CoreBox extends React.Component {
     constructor(props) {
@@ -19,14 +22,14 @@ class CoreBox extends React.Component {
         this.state = {
             popUp: false,
             videoList: [
-                {
-                    thumbnail: "thumb.jpg"
-                }
             ]
         }
         this.onAddVideoClick = this.onAddVideoClick.bind(this)
         this.onPopUpClose = this.onPopUpClose.bind(this)
         this.popUpElement = <Uploader fileType="video" onClose={this.onPopUpClose} />
+        this.url = "http://localhost:8080/api/video/get/user"
+        this.getOwnList = this.getOwnList.bind(this)
+
     }
 
     getPopUp() {
@@ -40,6 +43,24 @@ class CoreBox extends React.Component {
     onPopUpClose() {
         this.setState({ popUp: false })
 
+    }
+
+    getOwnList(){
+        const token = localStorage.getItem("token");
+        let conf = {
+            headers:{
+                'Authorization' : "Bearer " + token
+            }
+        }
+        axios.get(this.url, conf)
+        .then((response)=>{
+            if (response.data != null){
+                let videoList = response.data.obj
+                this.setState({videoList})
+            }
+        })
+        .catch((err)=>{
+        })
     }
 
     myVideoList() {
@@ -58,6 +79,11 @@ class CoreBox extends React.Component {
 
     getList() {
         return <EmptyList onAddVideoClick = {this.onAddVideoClick} />
+    }
+
+    /////
+    componentDidMount(){
+        this.getOwnList()
     }
 
     render() {
