@@ -9,32 +9,33 @@ class SideBar extends React.Component{
 
     constructor(props){
         super(props)
+        this.state = {Currentsection : ""}
         if(window.location.pathname == "/login" || window.location.pathname == "/"){
-            this.Currentsection = "/myvideos"
+            this.state.Currentsection = "/myvideos"
         }
-        else this.Currentsection = window.location.pathname
-        
+        else this.state.Currentsection = window.location.pathname
+        this.setCurrent = this.setCurrent.bind(this)
     }
-    setCurrent(){
-        this.Currentsection = window.location.pathname
+    setCurrent(location){
+        this.setState({Currentsection:location })
     }
     render(){
         return <div className={styles.sideBar}>
            <div>
                <h1 className={styles.siteTitle}>FASTcast</h1>
                 <BarItem to ="/myvideos" 
-                         className={  this.Currentsection == "/myvideos" ? styles.bareItemOn : null}
-                         onClick = {this.setCurrent}>
+                         className={  this.state.Currentsection == "/myvideos" ? styles.bareItemOn : null}
+                         onClick = {()=>this.setCurrent("/myvideos")}>
                     <FaUserLock className={styles.icon}/> My videos
                 </BarItem>
                 <BarItem to ="/videos" 
-                        className={  this.Currentsection == "/videos" ? styles.bareItemOn : null}
-                        onClick = {this.setCurrent}>
+                        className={  this.state.Currentsection == "/videos" ? styles.bareItemOn : null}
+                        onClick = {()=>this.setCurrent("/videos")}>
                     <FaVideo className={styles.icon}/> public videos
                 </BarItem>
                 <BarItem to ="/settings" 
-                        className={  this.Currentsection == "/settings" ? styles.bareItemOn : null}
-                        onClick = {this.setCurrent}>
+                        className={  this.state.Currentsection == "/settings" ? styles.bareItemOn : null}
+                        onClick = {()=>this.setCurrent("/settings")}>
                     <IoMdSettings className={styles.icon}/> Settings
                 </BarItem>
            </div>
