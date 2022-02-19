@@ -7,6 +7,7 @@ import PopUp from "./PopUp";
 import EmptyList from "./EmptyList"
 import DeleteConfirmer from "./DeleteConfirmer";
 import Uploader from "./Uploader";
+import Spinner from "./Spinner";
 class MyVideoList extends React.Component {
 
     constructor(props) {
@@ -59,9 +60,10 @@ class MyVideoList extends React.Component {
     }
 
     render() {
-        if (this.state.videoList == null) {
-            return <p></p>
-        }
+        if(this.state.videoList == null)
+            return <div className={CoreBoxstyles.spinnerContainer}>
+                    <Spinner/>
+                </div>
         if (this.state.videoList.length != 0) {
             return <React.StrictMode>
                 {this.state.popUp ? <PopUp>

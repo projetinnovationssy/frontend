@@ -3,17 +3,14 @@ import CoreBoxstyles from "./CoreBox.module.css"
 import axios from "axios";
 import VideoGrid from "./VideoGrid";
 import VIdeoItem from "./VIdeoItem";
-import PopUp from "./PopUp";
 import EmptyList from "./EmptyList"
-import DeleteConfirmer from "./DeleteConfirmer";
-import Uploader from "./Uploader";
+import Spinner from "./Spinner";
 class PublicVideoList extends React.Component{
 
     constructor(props) {
         super(props)
         this.state = {
-            videoList: [
-            ]
+            videoList: null
         }
         this.url = "http://localhost:8080/api/video/get/public/all"
         this.getPublicList = this.getPublicList.bind(this)
@@ -53,6 +50,10 @@ class PublicVideoList extends React.Component{
     }
 
     render(){
+        if(this.state.videoList == null)
+            return <div className={CoreBoxstyles.spinnerContainer}>
+                    <Spinner/>
+                </div>
         if (this.state.videoList.length != 0) {
             return <React.StrictMode>
                 <div className={CoreBoxstyles.title}>Public Videos</div>
