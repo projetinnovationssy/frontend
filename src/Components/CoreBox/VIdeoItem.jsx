@@ -4,7 +4,7 @@ import styles from "./VideoGrid.module.css"
 class VIdeoItem extends React.Component{
 
     render(){
-        return <div className={styles.videoItem}>
+        return <div className={styles.videoItem} onClick={this.props.onClick}>
             <img className={styles.thumbnail} src={this.props.thumbnail}/>
             <div className={styles.container}>
                 <p className={styles.videoTitle}>Maher Zain - Qalbi Sajad | Vocals Only ماهر زين - قلبي سجد |</p>

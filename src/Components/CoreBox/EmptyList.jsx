@@ -4,7 +4,7 @@ import styles from "./CoreBox.module.css"
 class EmptyList extends React.Component{
     constructor(props){
         super(props)
-    }
+    }   
     render(){
         return <div className={styles.EmtyBox}>
                 <img className={styles.img} src="./empty.png" alt="" />

@@ -3,37 +3,68 @@ import CoreBoxstyles from "./CoreBox.module.css"
 import axios from "axios";
 import VideoGrid from "./VideoGrid";
 import VIdeoItem from "./VIdeoItem";
+import {GrClose} from "react-icons/gr"
 import PopUp from "./PopUp";
 import EmptyList from "./EmptyList"
 import DeleteConfirmer from "./DeleteConfirmer";
 import Uploader from "./Uploader";
 import Spinner from "./Spinner";
+import Plyr from 'plyr-react'
+import 'plyr-react/dist/plyr.css'
+import plyrStyle from './plyrStyle.module.css'
 class MyVideoList extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            popUp: false,
-            videoList: null
+            popUp: null,
+            videoList: null,
         }
-        this.onAddVideoClick = this.onAddVideoClick.bind(this)
         this.onPopUpClose = this.onPopUpClose.bind(this)
-        this.popUpElement = <Uploader fileType="video" onClose={this.onPopUpClose} />
         this.url = "http://localhost:8080/api/video/get/user"
         this.getOwnList = this.getOwnList.bind(this)
+        this.getPopUp = this.getPopUp.bind(this)
+        this.onAddVideoClick = this.onAddVideoClick.bind(this)
+        this.onVideoClick = this.onVideoClick.bind(this)
 
+    }
+
+
+
+    onAddVideoClick() {
+        this.setState({ popUp: "uploader" })
+    }
+
+    onVideoClick() {
+        this.setState({ popUp: "player" })
     }
 
     getPopUp() {
-        return this.popUpElement
-    }
-
-    onAddVideoClick() {
-        this.setState({ popUp: true })
+        if (this.state.popUp == "uploader") {
+            return <Uploader fileType="video" onClose={this.onPopUpClose} />
+        }
+        if (this.state.popUp == "player") {
+            return <div className={plyrStyle.plyr}>
+                <button className={plyrStyle.closebutton} onClick={this.onPopUpClose} ><GrClose /></button>
+                <Plyr
+                    source={
+                        {
+                            type: 'video',
+                            sources: [
+                                {
+                                    src: 'video.mp4',
+                                    type: 'video/mp4',
+                                    size: 720
+                                }]
+                        }
+                    }
+                />
+            </div>
+        }
     }
 
     onPopUpClose() {
-        this.setState({ popUp: false })
+        this.setState({ popUp: null })
 
     }
 
@@ -60,10 +91,10 @@ class MyVideoList extends React.Component {
     }
 
     render() {
-        if(this.state.videoList == null)
+        if (this.state.videoList == null)
             return <div className={CoreBoxstyles.spinnerContainer}>
-                    <Spinner/>
-                </div>
+                <Spinner />
+            </div>
         if (this.state.videoList.length != 0) {
             return <React.StrictMode>
                 {this.state.popUp ? <PopUp>
@@ -74,15 +105,21 @@ class MyVideoList extends React.Component {
                     {this.state.videoList.map((value, index) => (
                         <VIdeoItem thumbnail={value.thumbnail}
                             key={index}
-                            edit = {()=>{}} 
-                            delete = {()=>{}} />
+                            onClick={this.onVideoClick}
+                            edit={() => { }}
+                            delete={() => { }} />
                     ))}
                 </VideoGrid>
             </React.StrictMode>
-        } else return <EmptyList 
-                        title = "You have no video!" 
-                        onAddVideoClick={this.onAddVideoClick}
-                        description = "Sorry! there are no videos in your list, but you can download some! please go ahead and click add video below." />
+        } else return <React.StrictMode>
+            {this.state.popUp ? <PopUp>
+                {this.getPopUp()}
+            </PopUp> : null}
+            <EmptyList
+                title="You have no video!"
+                onAddVideoClick={this.onAddVideoClick}
+                description="Sorry! there are no videos in your list, but you can download some! please go ahead and click add video below." />
+        </React.StrictMode>
     }
 
 }

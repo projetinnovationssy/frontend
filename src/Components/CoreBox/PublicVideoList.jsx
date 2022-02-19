@@ -10,7 +10,7 @@ class PublicVideoList extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            videoList: null
+            videoList: null,
         }
         this.url = "http://localhost:8080/api/video/get/public/all"
         this.getPublicList = this.getPublicList.bind(this)
