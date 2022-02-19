@@ -9,7 +9,7 @@ class SideBar extends React.Component{
 
     constructor(props){
         super(props)
-        if(window.location.pathname == "/login"){
+        if(window.location.pathname == "/login" || window.location.pathname == "/"){
             this.Currentsection = "/myvideos"
         }
         else this.Currentsection = window.location.pathname

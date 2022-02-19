@@ -15,7 +15,6 @@ class SignInForm extends React.Component{
     }
 
     handleSubmit(){
-        //
         let email = this.email.current.value
         let password = this.password.current.value
         if(email != null && password!= null && email != "" && password != ""){
