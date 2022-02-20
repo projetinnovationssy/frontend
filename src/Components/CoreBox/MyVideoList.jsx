@@ -106,7 +106,7 @@ class MyVideoList extends React.Component {
                 <div className={CoreBoxstyles.title}>My Videos <button className={CoreBoxstyles.button} onClick={this.onAddVideoClick} style={{ padding: "8px 25px" }}>Add video</button></div>
                 <VideoGrid >
                     {this.state.videoList.map((value, index) => (
-                        <VIdeoItem thumbnail={value.thumbnail}
+                        <VIdeoItem videoObj = {value}
                             key={index}
                             onClick={()=>this.onVideoClick(1)}
                             edit={() => { console.log("ok") }}

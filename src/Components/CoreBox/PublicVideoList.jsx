@@ -68,7 +68,7 @@ class PublicVideoList extends React.Component{
                 <div className={CoreBoxstyles.title}>Public Videos</div>
                 <VideoGrid >
                     {this.state.videoList.map((value, index)=>(
-                        <VIdeoItem thumbnail = {value.thumbnail} key = {index} onClick={()=>this.onVideoClick(1)}/>
+                        <VIdeoItem videoObj = {value} key = {index} onClick={()=>this.onVideoClick(1)}/>
                     ))}
                 </VideoGrid>
             </React.StrictMode>
