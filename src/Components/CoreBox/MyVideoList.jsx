@@ -3,15 +3,12 @@ import CoreBoxstyles from "./CoreBox.module.css"
 import axios from "axios";
 import VideoGrid from "./VideoGrid";
 import VIdeoItem from "./VIdeoItem";
-import {GrClose} from "react-icons/gr"
 import PopUp from "./PopUp";
 import EmptyList from "./EmptyList"
 import DeleteConfirmer from "./DeleteConfirmer";
 import Uploader from "./Uploader";
 import Spinner from "./Spinner";
-import Plyr from 'plyr-react'
-import 'plyr-react/dist/plyr.css'
-import plyrStyle from './plyrStyle.module.css'
+import Player from "./Player/Player";
 class MyVideoList extends React.Component {
 
     constructor(props) {
@@ -19,6 +16,7 @@ class MyVideoList extends React.Component {
         this.state = {
             popUp: null,
             videoList: null,
+            videoId: null
         }
         this.onPopUpClose = this.onPopUpClose.bind(this)
         this.url = "http://localhost:8080/api/video/get/user"
@@ -26,7 +24,8 @@ class MyVideoList extends React.Component {
         this.getPopUp = this.getPopUp.bind(this)
         this.onAddVideoClick = this.onAddVideoClick.bind(this)
         this.onVideoClick = this.onVideoClick.bind(this)
-
+        this.onDeleteClick = this.onDeleteClick.bind(this)
+        this.delete = this.delete.bind(this)
     }
 
 
@@ -35,8 +34,8 @@ class MyVideoList extends React.Component {
         this.setState({ popUp: "uploader" })
     }
 
-    onVideoClick() {
-        this.setState({ popUp: "player" })
+    onVideoClick(videoId) {
+        this.setState({ popUp: "player", videoId })
     }
 
     getPopUp() {
@@ -44,28 +43,24 @@ class MyVideoList extends React.Component {
             return <Uploader fileType="video" onClose={this.onPopUpClose} />
         }
         if (this.state.popUp == "player") {
-            return <div className={plyrStyle.plyr}>
-                <button className={plyrStyle.closebutton} onClick={this.onPopUpClose} ><GrClose /></button>
-                <Plyr
-                    source={
-                        {
-                            type: 'video',
-                            sources: [
-                                {
-                                    src: 'video.mp4',
-                                    type: 'video/mp4',
-                                    size: 720
-                                }]
-                        }
-                    }
-                />
-            </div>
+            return <Player src ="video.mp4" onClose = {this.onPopUpClose}/>
         }
+        if(this.state.popUp == "deleter"){
+            return <DeleteConfirmer onDelete = {()=>this.delete(this.state.videoId)} onCancel = {this.onPopUpClose}/>
+        }
+    }
+
+    delete(videoId){
+        console.log("delete "+videoId)
     }
 
     onPopUpClose() {
         this.setState({ popUp: null })
 
+    }
+
+    onDeleteClick(videoId){
+        this.setState({popUp:"deleter", videoId})
     }
 
     componentDidMount() {
@@ -105,9 +100,9 @@ class MyVideoList extends React.Component {
                     {this.state.videoList.map((value, index) => (
                         <VIdeoItem thumbnail={value.thumbnail}
                             key={index}
-                            onClick={this.onVideoClick}
+                            onClick={()=>this.onVideoClick(1)}
                             edit={() => { console.log("ok") }}
-                            delete={() => { }} />
+                            delete={ ()=>this.onDeleteClick(2) } />
                     ))}
                 </VideoGrid>
             </React.StrictMode>
@@ -126,20 +121,3 @@ class MyVideoList extends React.Component {
 
 
 export default MyVideoList;
-
-/*git 
-        <PopUp>
-            <DeleteConfirmer/>
-        </PopUp>
-        <PopUp>
-            <Uploader fileType = "video"/>
-        </PopUp>
-        
-        <PopUp>
-            <DeleteConfirmer/>
-        </PopUp>
-
-                        {
-                    thumbnail: "thumb.jpg"
-                }
-*/
