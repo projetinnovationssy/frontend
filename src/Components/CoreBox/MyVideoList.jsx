@@ -50,8 +50,13 @@ class MyVideoList extends React.Component {
         }
     }
 
-    delete(videoId){
-        console.log("delete "+videoId)
+    delete(){
+        if (this.state.videoId != null && this.state.videoList != null){
+            this.state.videoList.forEach((element, index)=>{
+                console.log(element)
+            });
+        }
+        
     }
 
     onPopUpClose() {
@@ -82,6 +87,9 @@ class MyVideoList extends React.Component {
                 }
             })
             .catch((err) => {
+                if (err.response.status == 403){
+                    console.log("ok")
+                }
             })
     }
 

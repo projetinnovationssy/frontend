@@ -5,21 +5,22 @@ import VideoGrid from "./VideoGrid";
 import VIdeoItem from "./VIdeoItem";
 import EmptyList from "./EmptyList"
 import Spinner from "./Spinner";
+import Player from "./Player/Player";
+import PopUp from "./PopUp";
+
 class PublicVideoList extends React.Component{
 
     constructor(props) {
         super(props)
         this.state = {
             videoList: null,
+            popUp: false,
+            videoId: null
         }
         this.url = "http://localhost:8080/api/video/get/public/all"
         this.getPublicList = this.getPublicList.bind(this)
+        this.onPopUpClose = this.onPopUpClose.bind(this)
 
-    }
-
-
-    onAddVideoClick() {
-        this.setState({ popUp: true })
     }
 
     onPopUpClose() {
@@ -27,9 +28,14 @@ class PublicVideoList extends React.Component{
 
     }
 
+    onVideoClick(videoId) {
+        this.setState({ popUp: true, videoId })
+    }
+
     componentDidMount(){
         this.getPublicList()
     }
+
 
     getPublicList(){
         const token = localStorage.getItem("token");
@@ -56,10 +62,13 @@ class PublicVideoList extends React.Component{
                 </div>
         if (this.state.videoList.length != 0) {
             return <React.StrictMode>
+                {this.state.popUp ? <PopUp>
+                    <Player src ="video.mp4" onClose = {this.onPopUpClose}/>
+                </PopUp> : null}
                 <div className={CoreBoxstyles.title}>Public Videos</div>
                 <VideoGrid >
                     {this.state.videoList.map((value, index)=>(
-                        <VIdeoItem thumbnail = {value.thumbnail} key = {index}/>
+                        <VIdeoItem thumbnail = {value.thumbnail} key = {index} onClick={()=>this.onVideoClick(1)}/>
                     ))}
                 </VideoGrid>
             </React.StrictMode>
@@ -72,20 +81,3 @@ class PublicVideoList extends React.Component{
 
 
 export default PublicVideoList;
-
-/*git 
-        <PopUp>
-            <DeleteConfirmer/>
-        </PopUp>
-        <PopUp>
-            <Uploader fileType = "video"/>
-        </PopUp>
-        
-        <PopUp>
-            <DeleteConfirmer/>
-        </PopUp>
-
-                        {
-                    thumbnail: "thumb.jpg"
-                }
-*/
