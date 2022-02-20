@@ -106,7 +106,7 @@ class MyVideoList extends React.Component {
                         <VIdeoItem thumbnail={value.thumbnail}
                             key={index}
                             onClick={this.onVideoClick}
-                            edit={() => { }}
+                            edit={() => { console.log("ok") }}
                             delete={() => { }} />
                     ))}
                 </VideoGrid>
