@@ -1,14 +1,14 @@
 import React from "react";
-import CoreBoxstyles from "./CoreBox.module.css"
+import VideoGalleryStyle from "./VideoGalleryStyle.module.css"
 import axios from "axios";
-import VideoGrid from "./VideoGrid";
-import VIdeoItem from "./VIdeoItem";
-import PopUp from "./PopUp";
-import EmptyList from "./EmptyList"
-import DeleteConfirmer from "./DeleteConfirmer";
-import Uploader from "./Uploader";
-import Spinner from "./Spinner";
-import Player from "./Player/Player";
+import VideoGrid from "../VideoGrid";
+import VIdeoItem from "../VIdeoItem";
+import PopUp from "../PopUp";
+import EmptyList from "../EmptyList"
+import DeleteConfirmer from "../DeleteConfirmer";
+import Uploader from "../Uploader";
+import Spinner from "../Spinner";
+import Player from "../Player/Player";
 class MyVideoList extends React.Component {
 
     constructor(props) {
@@ -26,6 +26,7 @@ class MyVideoList extends React.Component {
         this.onVideoClick = this.onVideoClick.bind(this)
         this.onDeleteClick = this.onDeleteClick.bind(this)
         this.deleteFromState = this.deleteFromState.bind(this)
+        this.getId = this.getId.bind(this)
     }
 
 
@@ -38,12 +39,17 @@ class MyVideoList extends React.Component {
         this.setState({ popUp: "player", currentVideoId })
     }
 
+    getId(index){
+        let list = this.state.videoList
+        return list[index].id
+    }
+
     getPopUp() {
         if (this.state.popUp == "uploader") {
             return <Uploader fileType="video" onClose={this.onPopUpClose} onUpload = {this.getOwnList }/>
         }
         if (this.state.popUp == "player") {
-            return <Player src ="http://127.0.0.1:8080/api/video/stream?video_id=5" onClose = {this.onPopUpClose}/>
+            return <Player src = {"http://127.0.0.1:8080/api/video/stream?video_id=" + this.state.currentVideoId} onClose = {this.onPopUpClose}/>
         }
         if(this.state.popUp == "deleter"){
             let video = this.state.videoList[this.state.currentVideoIndex]
@@ -54,7 +60,7 @@ class MyVideoList extends React.Component {
     deleteFromState(){
         let index = this.state.currentVideoIndex
         let videoList = [... this.state.videoList]
-        videoList.pop(index)
+        videoList.splice(index, 1)
         this.setState({videoList, currentVideoIndex: null, popUp: false})
     }
 
@@ -94,7 +100,7 @@ class MyVideoList extends React.Component {
 
     render() {
         if (this.state.videoList == null)
-            return <div className={CoreBoxstyles.spinnerContainer}>
+            return <div className={VideoGalleryStyle.spinnerContainer}>
                 <Spinner />
             </div>
         if (this.state.videoList.length != 0) {
@@ -102,12 +108,12 @@ class MyVideoList extends React.Component {
                 {this.state.popUp ? <PopUp>
                     {this.getPopUp()}
                 </PopUp> : null}
-                <div className={CoreBoxstyles.title}>My Videos <button className={CoreBoxstyles.button} onClick={this.onAddVideoClick} style={{ padding: "8px 25px" }}>Add video</button></div>
+                <div className={VideoGalleryStyle.title}>My Videos <button className={VideoGalleryStyle.button} onClick={this.onAddVideoClick} style={{ padding: "8px 25px" }}>Add video</button></div>
                 <VideoGrid >
                     {this.state.videoList.map((value, index) => (
                         <VIdeoItem videoObj = {value}
                             key={index}
-                            onClick={()=>this.onVideoClick(1)}
+                            onClick={()=>this.onVideoClick(this.getId(index))}
                             edit={() => { console.log("ok") }}
                             delete={ ()=>this.onDeleteClick(index) } />
                     ))}

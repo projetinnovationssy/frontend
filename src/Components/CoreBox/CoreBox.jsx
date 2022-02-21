@@ -7,8 +7,8 @@ import {
     Navigate
 } from "react-router-dom";
 
-import MyVideoList from "./MyVideoList";
-import PublicVideoList from "./PublicVideoList";
+import MyVideoList from "./VideoGallery/MyVideoList";
+import PublicVideoList from "./VideoGallery/PublicVideoList";
 import Settings from "./Settings";
 
 class CoreBox extends React.Component {

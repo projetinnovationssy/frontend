@@ -1,12 +1,12 @@
 import React from "react";
-import CoreBoxstyles from "./CoreBox.module.css"
+import VideoGalleryStyle from "./VideoGalleryStyle.module.css"
 import axios from "axios";
-import VideoGrid from "./VideoGrid";
-import VIdeoItem from "./VIdeoItem";
-import EmptyList from "./EmptyList"
-import Spinner from "./Spinner";
-import Player from "./Player/Player";
-import PopUp from "./PopUp";
+import VideoGrid from "../VideoGrid";
+import VIdeoItem from "../VIdeoItem";
+import EmptyList from "../EmptyList"
+import Spinner from "../Spinner";
+import Player from "../Player/Player";
+import PopUp from "../PopUp";
 
 class PublicVideoList extends React.Component{
 
@@ -15,21 +15,27 @@ class PublicVideoList extends React.Component{
         this.state = {
             videoList: null,
             popUp: false,
-            videoId: null
+            currentVideoId: null
         }
         this.url = "http://localhost:8080/api/video/get/public/all"
         this.getPublicList = this.getPublicList.bind(this)
         this.onPopUpClose = this.onPopUpClose.bind(this)
+        this.onVideoClick = this.onVideoClick.bind(this)
+        this.getId = this.getId.bind(this)
+
 
     }
-
+    getId(index){
+        let list = this.state.videoList
+        return list[index].id
+    }
     onPopUpClose() {
         this.setState({ popUp: false })
 
     }
 
-    onVideoClick(videoId) {
-        this.setState({ popUp: true, videoId })
+    onVideoClick(currentVideoId) {
+        this.setState({ popUp: true, currentVideoId })
     }
 
     componentDidMount(){
@@ -57,18 +63,18 @@ class PublicVideoList extends React.Component{
 
     render(){
         if(this.state.videoList == null)
-            return <div className={CoreBoxstyles.spinnerContainer}>
+            return <div className={VideoGalleryStyle.spinnerContainer}>
                     <Spinner/>
                 </div>
         if (this.state.videoList.length != 0) {
             return <React.StrictMode>
                 {this.state.popUp ? <PopUp>
-                    <Player src ="video.mp4" onClose = {this.onPopUpClose}/>
+                    <Player src = {"http://127.0.0.1:8080/api/video/stream?video_id=" + this.state.currentVideoId} onClose = {this.onPopUpClose}/>
                 </PopUp> : null}
-                <div className={CoreBoxstyles.title}>Public Videos</div>
+                <div className={VideoGalleryStyle.title}>Public Videos</div>
                 <VideoGrid >
                     {this.state.videoList.map((value, index)=>(
-                        <VIdeoItem videoObj = {value} key = {index} onClick={()=>this.onVideoClick(1)}/>
+                        <VIdeoItem videoObj = {value} key = {index} onClick={()=>this.onVideoClick(this.getId(index))}/>
                     ))}
                 </VideoGrid>
             </React.StrictMode>

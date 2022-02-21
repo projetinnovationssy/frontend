@@ -19,7 +19,8 @@
     cursor: pointer;
 }
 .thumbnail{
-    height: 168px;
+    width: 294px;
+    height: 170px;
 }
 .videoItem:hover{
     transform: scale(1.02);
