@@ -2,6 +2,7 @@ import SignInForm from "./Components/Form/SignInForm";
 import SignUpForm from "./Components/Form/SignUpForm";
 import SideBar from "./Components/SideBar/SabeBar";
 import CoreBox from "./Components/CoreBox/CoreBox";
+import FastClient from "./FastClient/FastClient";
 import "./css/App.css";
 import React from "react";
 import {
@@ -16,58 +17,50 @@ class App extends React.Component {
 
   constructor(props) {
     super(props)
+    this.url = "http://localhost:8080"
     this.state = {
       token: localStorage.getItem("token")
     }
     this.setToken = this.setToken.bind(this)
     this.logout = this.logout.bind(this)
-    console.log(localStorage.getItem("token"))
+    this.FastClient = new FastClient(this.url, this.logout)
   }
 
-  validateToken(token){
-    if(token != ""){
-      localStorage.setItem("token", token)
-      return true
-    }
-    return false
-  }
-
-  serverLogOut(){
+  serverLogOut() {
     return true
   }
 
-  logout(){
-    if(this.serverLogOut()){
+  logout() {
+    if (this.serverLogOut()) {
       localStorage.removeItem("token")
-      this.setState({token: null})
+      this.setState({ token: null })
     }
   }
 
-  setToken(token){
-    this.setState({token})
+  setToken(token) {
+    localStorage.setItem("token", token)
+    this.setState({ token })
   }
 
   Prerender() {
     if (this.state.token != null) {
-      if (this.validateToken(this.state.token)) {
         return <div className="App">
-              <SideBar logoutCallback = {this.logout} />
-              <CoreBox logoutCallback = {this.logout}  />
+          <SideBar logoutCallback={this.logout} />
+          <CoreBox logoutCallback={this.logout} httpclient = {this.FastClient} />
         </div>
-      }
     }
-    return <div className="AppForm">  
-          <Routes>
-            <Route path="/login" element={<SignInForm onLogin = {this.setToken}/>}/>
-            <Route path="/signup" element={<SignUpForm onSignUp = {this.setToken}/>}/>
-            <Route path="*" element = {<Navigate to="/login"/>} />
-          </Routes>
-      </div>
+    return <div className="AppForm">
+      <Routes>
+        <Route path="/login" element={<SignInForm onLogin={this.setToken} httpclient = {this.FastClient} />} />
+        <Route path="/signup" element={<SignUpForm onSignUp={this.setToken} httpclient = {this.FastClient} />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    </div>
   }
 
-  render(){
+  render() {
     return <Router>
-        {this.Prerender()}
+      {this.Prerender()}
     </Router>
   }
 }

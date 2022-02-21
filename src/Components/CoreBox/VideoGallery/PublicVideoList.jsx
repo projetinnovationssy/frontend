@@ -1,8 +1,7 @@
 import React from "react";
 import VideoGalleryStyle from "./VideoGalleryStyle.module.css"
-import axios from "axios";
-import VideoGrid from "../VideoGrid";
-import VIdeoItem from "../VIdeoItem";
+import VideoGrid from "./VideoGrid";
+import VIdeoItem from "./VIdeoItem";
 import EmptyList from "../EmptyList"
 import Spinner from "../Spinner";
 import Player from "../Player/Player";
@@ -19,12 +18,11 @@ class PublicVideoList extends React.Component{
             popUp: false,
             currentVideoId: null
         }
-        this.url = "http://localhost:8080/api/video/get/public/all"
-        this.getPublicList = this.getPublicList.bind(this)
+        
         this.onPopUpClose = this.onPopUpClose.bind(this)
         this.onVideoClick = this.onVideoClick.bind(this)
         this.getId = this.getId.bind(this)
-
+        this.httpclient = this.props.httpclient
 
     }
     getId(index){
@@ -41,26 +39,7 @@ class PublicVideoList extends React.Component{
     }
 
     componentDidMount(){
-        this.getPublicList()
-    }
-
-
-    getPublicList(){
-        const token = localStorage.getItem("token");
-        let conf = {
-            headers:{
-                'Authorization' : "Bearer " + token
-            }
-        }
-        axios.post(this.url, conf)
-        .then((response)=>{
-            if (response.data != null){
-                let videoList = response.data.obj
-                this.setState({videoList})
-            }
-        })
-        .catch((err)=>{
-        })
+        this.httpclient.getPublicList((videoList)=>this.setState({videoList}))
     }
 
     render(){
@@ -71,12 +50,16 @@ class PublicVideoList extends React.Component{
         if (this.state.videoList.length != 0) {
             return <React.StrictMode>
                 {this.state.popUp ? <PopUp>
-                    <Player src = {"http://127.0.0.1:8080/api/video/stream?video_id=" + this.state.currentVideoId} onClose = {this.onPopUpClose}/>
+                    <Player src = {this.httpclient.getVideoStreamURL(this.state.currentVideoId)} onClose = {this.onPopUpClose}/>
                 </PopUp> : null}
                 <div className={VideoGalleryStyle.title}>Public Videos</div>
                 <VideoGrid >
                     {this.state.videoList.map((value, index)=>(
-                        <VIdeoItem videoObj = {value} key = {index} onClick={()=>this.onVideoClick(this.getId(index))}/>
+                        <VIdeoItem 
+                            videoObj = {value} 
+                            key = {index} 
+                            onClick={()=>this.onVideoClick(this.getId(index))}
+                            httpclient = {this.props.httpclient} />
                     ))}
                 </VideoGrid>
             </React.StrictMode>

@@ -2,7 +2,6 @@ import React from "react";
 import FormTextField from "./FormTextField";
 import styles from "./Form.module.css"
 import {Link} from "react-router-dom"
-import axios from "axios";
 
 class SignInForm extends React.Component{
     constructor(props){
@@ -10,21 +9,9 @@ class SignInForm extends React.Component{
         this.email = React.createRef()
         this.password = React.createRef()
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.url = "http://127.0.0.1:8080/signin"
+        this.httpclient = this.props.httpclient
     }
-    getTokenAndLogin(userData){
-        axios.post(this.url, userData)
-            .then((response)=>{
-                if(response.data.token != null){
-                    console.log(response.data.token)
-                    this.props.onLogin(response.data.token)
-                }
-            }).catch((error)=>{
-                if (error.response.status == 403){
-                    alert("incorrect credentials")
-                }
-            })
-    }
+
 
     handleSubmit(){
         let email = this.email.current.value
@@ -34,7 +21,8 @@ class SignInForm extends React.Component{
                 username: email,
                 password
             }
-            this.getTokenAndLogin(userData)
+            // onLogin take token as an Argument 
+            this.httpclient.getTokenAndLogin(userData, this.props.onLogin)
         }
     }
 

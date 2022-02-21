@@ -4,7 +4,6 @@ import { GrClose } from "react-icons/gr"
 import Upstyles from "./Uploader.module.css"
 import FormTextField from "../../Form/FormTextField";
 import FormInputFIle from "../../Form/FormInputFIle";
-import axios from "axios";
 import Spinner from "../Spinner";
 
 class Uploader extends React.Component {
@@ -24,6 +23,10 @@ class Uploader extends React.Component {
         this.handleEnterDragging = this.handleEnterDragging.bind(this)
         this.handleLeaveDragging = this.handleLeaveDragging.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.onUploadSuccess = this.onUploadSuccess.bind(this)
+        this.uploadsubmit = this.uploadsubmit.bind(this)
+        this.updatesubmit = this.updatesubmit.bind(this)
+        this.httpclient = this.props.httpclient
 
     }
     onVideoSelect(e) {
@@ -51,43 +54,48 @@ class Uploader extends React.Component {
         }
     }
 
-    handleSubmit(){
+    uploadsubmit(){
         this.setState({uploadStarting:true})
-        const token = localStorage.getItem("token");
-        let conf = {
-            headers: {
-                'Authorization': "Bearer " + token
-            }
-        }
-        let videoForm = new FormData()
         let name = this.name.current.value
         let description = this.description.current.value
-        
         let thumbnail = this.thumbnail.current.files
         if(name != null && description != null && thumbnail.length == 1){
-            console.log("ok")
-            videoForm.append("name", name)
-            videoForm.append("description", description)
-            videoForm.append("visibility", true)
-            videoForm.append("thumbnail", thumbnail[0])
-            videoForm.append("video", this.state.videoFile)
-
-            let url = "http://127.0.0.1:8080/api/video/upload"
-
-            axios.post(url, videoForm,conf)
-            .then((response)=>{
-                console.log(response)
-                if(response.data.obj == true){
-                    this.onUploadSuccess()
-                }
-            }).catch((error)=>{
-                console.log(error)
-            })
+            this.httpclient.upload(name, 
+                    description, 
+                    thumbnail[0], 
+                    this.state.videoFile,
+                    this.onUploadSuccess,
+                    this.props.onClose)
         }
         else{
             alert("somes fields are Empty!")
         }
+    }
 
+    updatesubmit(){
+        this.setState({uploadStarting:true})
+        let name = this.name.current.value
+        let description = this.description.current.value
+        let id = this.props.video.id
+        if(id != null && name != null && description != null){
+            console.log(this)
+            this.httpclient.update(id,name, 
+                    description, 
+                    this.onUploadSuccess,
+                    this.props.onClose)
+        }
+        else{
+            alert("somes fields are Empty!")
+        }
+    }
+
+    handleSubmit(){
+        if(this.props.purpose == "upload"){
+            this.uploadsubmit()
+        }
+        else if (this.props.purpose == "update"){
+            this.updatesubmit()
+        }
     }
     onUploadSuccess(){
         alert("Video has been uploaded successfully!")
@@ -104,7 +112,7 @@ class Uploader extends React.Component {
                 <FormTextField label = "Video name" refence={this.name}/>
                 <FormTextField label = "Video description" refence={this.description}/>
                 {purpose == "upload" ? <FormInputFIle refence = {this.thumbnail} label = "Choose a thumbnail" id = "thmbnailId"/> : null}
-                <button className={Upstyles.button} onClick={this.handleSubmit}>Confirm the upload</button>
+                <button className={Upstyles.button} onClick={this.handleSubmit}>Confirm the {purpose}</button>
             </div>
         }
     }

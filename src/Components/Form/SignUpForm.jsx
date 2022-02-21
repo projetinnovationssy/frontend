@@ -2,7 +2,6 @@ import React from "react";
 import FormTextField from "./FormTextField";
 import { Link, Navigate } from "react-router-dom"
 import styles from "./Form.module.css"
-import axios from "axios"
 
 class SignUpForm extends React.Component {
     constructor(props) {
@@ -13,32 +12,13 @@ class SignUpForm extends React.Component {
         this.password = React.createRef()
         this.password2 = React.createRef()
         this.handleSignUp = this.handleSignUp.bind(this)
-        this.signUp = this.signUp.bind(this)
         this.state = {
             redirect: null
         }
-        this.url = "http://127.0.0.1:8080/signup"
+        this.httpclient = this.props.httpclient
     }
 
-    signUp(userData) {
-        axios.post(this.url, userData)
-            .then((response) => {
-                console.log(response.data)
-                if (response.data.description == "User is Created Successfully") {
-                    alert("We have registered you!! you will be redirected to the login page")
-                    this.setState({ redirect: true })
-                }else if (response.data.description == "User Alredy Exist") {
-                    alert("We can't register you, User Alredy Exist")
-                } else {
-                    alert("We can't register you, verify your information and try again!")
-                }
-            })
-            .catch((error) => {
-                console.log(error.response)
-                alert("We can't register you, verify your information and try again!")
-            })
-
-    }
+    
 
     handleSignUp() {
         let fname = this.fname.current.value
@@ -55,7 +35,7 @@ class SignUpForm extends React.Component {
                 bodyFormData.append("email", email)
                 bodyFormData.append("pass", password)
                 bodyFormData.append("cpass", password2)
-                this.signUp(bodyFormData)
+                this.httpclient.signUp(bodyFormData, ()=>this.setState({ redirect: true }))
             } else {
                 alert("confirm password and password doesn't match!")
             }

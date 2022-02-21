@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import styles from "./VideoGrid.module.css"
 
@@ -6,27 +5,13 @@ class VIdeoItem extends React.Component{
     constructor(props){
         super(props)
         this.state = {thumbnail: null}
-        
+        this.httpclient = this.props.httpclient
     }
     componentDidMount(){
-        this.getTumbnail()
+        let id = this.props.videoObj.id
+        this.httpclient.getTumbnail(id,(thumbnail)=>this.setState({thumbnail}))
     }
-    getTumbnail(){
-        const token = localStorage.getItem("token");
-        let conf = {
-            headers: {
-                'Authorization': "Bearer " + token
-            },
-            responseType: "blob"
-        }
-        axios.get("http://127.0.0.1:8080/api/video/thumb?video_id="+this.props.videoObj.id, conf)
-        .then((response, )=>{
-            if(response != null){
-                let thumbnail = URL.createObjectURL(response.data)
-                this.setState({thumbnail})
-            }
-        })
-    }
+
     render(){
         return <div className={styles.videoItem} >
             <div className="img" onClick={this.props.onClick}>

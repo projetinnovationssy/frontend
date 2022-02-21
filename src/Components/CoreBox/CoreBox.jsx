@@ -10,7 +10,7 @@ import {
 import MyVideoList from "./VideoGallery/MyVideoList";
 import PublicVideoList from "./VideoGallery/PublicVideoList";
 import Settings from "./Settings";
-import PopUp from "./PopUp/PopUp";
+
 class CoreBox extends React.Component {
     constructor(props) {
         super(props)
@@ -28,9 +28,9 @@ class CoreBox extends React.Component {
             <Routes>
                 <Route path="/" element={<Navigate to='/myvideos' />} />
                 <Route path="/login" element={<Navigate to='/myvideos' />} />
-                <Route path="/myvideos" element={<MyVideoList/>} />
-                <Route path="/videos" element={<PublicVideoList/>} />
-                <Route path="/settings" element={<Settings logoutCallback = {this.props.logoutCallback}/>} />
+                <Route path="/myvideos" element={<MyVideoList httpclient = {this.props.httpclient}/>} />
+                <Route path="/videos" element={<PublicVideoList httpclient = {this.props.httpclient}/>} />
+                <Route path="/settings" element={<Settings logoutCallback = {this.props.logoutCallback} httpclient = {this.props.httpclient}/>} />
 
             </Routes>
 

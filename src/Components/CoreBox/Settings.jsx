@@ -14,9 +14,11 @@ class Settings extends React.Component {
         this.oldpassword = React.createRef()
         this.newpassword = React.createRef()
         this.cpassword = React.createRef()
+        this.httpclient = this.props.httpclient
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onPopUpClose = this.onPopUpClose.bind(this)
         this.ConfirmDelet = this.ConfirmDelet.bind(this)
+        this.deleteaccount = this.deleteaccount.bind(this)
         this.url = "http://localhost:8080/api/user/changepass"
     }
     handleSubmit() {
@@ -60,13 +62,17 @@ class Settings extends React.Component {
         this.setState({ popUp: true })
     }
 
+    deleteaccount(){
+        this.httpclient.deleteaccount()
+    }
+
     render() {
         return <div className={styles.container}>
             {this.state.popUp ? <PopUp>
                 <DeleteConfirmer
                     title = "Want you really delet your account"
-                    description = "By confirming delete, your account will be deleted and your videos either"
-                    onDelete = {()=>{}}  
+                    description = "By confirming the delete, your account will be deleted and neither will your videos."
+                    onDelete = {this.deleteaccount}  
                     onCancel = {this.onPopUpClose}/>
             </PopUp> : null}
             <h1 className={styles.title}>Settings</h1>
@@ -83,6 +89,7 @@ class Settings extends React.Component {
             </section>
             <section className={styles.section}>
                 <h2 className={styles.sectionTile}>Delete account</h2>
+                <div className="p">By confirming the delete, your account will be deleted and neither will your videos.</div>
                 <div className="sectionContent">
                     <div className={styles.groupForm}>
                         <button className={styles.button} style={{ backgroundColor: "#f06f6f" }} onClick={this.ConfirmDelet}>Delete my account</button>

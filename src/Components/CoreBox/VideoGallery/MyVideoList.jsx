@@ -1,8 +1,7 @@
 import React from "react";
 import VideoGalleryStyle from "./VideoGalleryStyle.module.css"
-import axios from "axios";
-import VideoGrid from "../VideoGrid";
-import VIdeoItem from "../VIdeoItem";
+import VideoGrid from "./VideoGrid";
+import VIdeoItem from "./VIdeoItem";
 import PopUp from "../PopUp/PopUp";
 import EmptyList from "../EmptyList";
 import DeleteConfirmer from "../PopUp/DeleteConfirmer"
@@ -16,18 +15,20 @@ class MyVideoList extends React.Component {
         this.state = {
             popUp: null,
             videoList: null,
-            currentVideoIndex: null
+            currentVideoIndex: null,
+            currentVideoId: null
         }
         this.onPopUpClose = this.onPopUpClose.bind(this)
-        this.url = "http://localhost:8080/api/video/get/user"
-        this.getOwnList = this.getOwnList.bind(this)
         this.getPopUp = this.getPopUp.bind(this)
         this.onAddVideoClick = this.onAddVideoClick.bind(this)
         this.onVideoClick = this.onVideoClick.bind(this)
         this.onDeleteClick = this.onDeleteClick.bind(this)
         this.deleteFromState = this.deleteFromState.bind(this)
+        this.delete =this.delete.bind(this)
         this.getId = this.getId.bind(this)
         this.getVideo =this.getVideo.bind(this)
+        this.getList = this.getList.bind(this)
+        this.httpclient = this.props.httpclient
     }
 
 
@@ -52,21 +53,28 @@ class MyVideoList extends React.Component {
 
     getPopUp() {
         if (this.state.popUp == "uploader") {
-            return <Uploader purpose = "upload" fileType="video" onClose={this.onPopUpClose} onUpload = {this.getOwnList }/>
+            return <Uploader purpose = "upload" httpclient = {this.httpclient} fileType="video" onClose={this.onPopUpClose} onUpload = {this.getList}/>
         }
         if (this.state.popUp == "uploder-update") {
-            return <Uploader purpose = "update" video = {this.getVideo(this.state.currentVideoIndex)} onClose={this.onPopUpClose} onUpload = {this.getOwnList }/>
+            return <Uploader purpose = "update" httpclient = {this.httpclient} video = {this.getVideo(this.state.currentVideoIndex)} onClose={this.onPopUpClose} onUpload = {this.getList }/>
         }
         if (this.state.popUp == "player") {
-            return <Player src = {"http://127.0.0.1:8080/api/video/stream?video_id=" + this.state.currentVideoId} onClose = {this.onPopUpClose}/>
+            let stremURL = this.httpclient.getVideoStreamURL(this.state.currentVideoId)
+            return <Player src = {stremURL} onClose = {this.onPopUpClose}/>
         }
         if(this.state.popUp == "deleter"){
             let video = this.state.videoList[this.state.currentVideoIndex]
             return <DeleteConfirmer 
             title = {"Are you sure you want to delete this video?"}
             description = {video.name}
-            onDelete = {this.deleteFromState}  currentVideo = {video} onCancel = {this.onPopUpClose}/>
+            onDelete = {this.delete}  currentVideo = {video} onCancel = {this.onPopUpClose}/>
         }
+    }
+
+    delete(){
+        let id = this.getId(this.state.currentVideoIndex)
+        let name = this.getVideo(this.state.currentVideoIndex).name
+        this.httpclient.delete(id, name, ()=>this.deleteFromState() )
     }
 
     deleteFromState(){
@@ -76,10 +84,14 @@ class MyVideoList extends React.Component {
         this.setState({videoList, currentVideoIndex: null, popUp: false})
     }
 
+    
+
     onPopUpClose() {
         this.setState({ popUp: null })
 
     }
+
+
 
     onDeleteClick(currentVideoIndex){
         this.setState({popUp:"deleter", currentVideoIndex})
@@ -89,29 +101,12 @@ class MyVideoList extends React.Component {
         this.setState({popUp:"uploder-update", currentVideoIndex})
     }
 
-    componentDidMount() {
-        this.getOwnList()
+    getList(){
+        this.httpclient.getOwnList((videoList)=>this.setState({videoList}))
     }
 
-    getOwnList() {
-        const token = localStorage.getItem("token");
-        let conf = {
-            headers: {
-                'Authorization': "Bearer " + token
-            }
-        }
-        axios.get(this.url, conf)
-            .then((response) => {
-                if (response.data != null) {
-                    let videoList = response.data.obj
-                    this.setState({ videoList })
-                }
-            })
-            .catch((err) => {
-                if (err.response.status == 403){
-                    console.log("ok")
-                }
-            })
+    componentDidMount() {
+        this.getList()
     }
 
     render() {
@@ -128,6 +123,7 @@ class MyVideoList extends React.Component {
                 <VideoGrid >
                     {this.state.videoList.map((value, index) => (
                         <VIdeoItem videoObj = {value}
+                            httpclient = {this.props.httpclient} 
                             key={index}
                             onClick={()=>this.onVideoClick(this.getId(index))}
                             edit={() =>this.onUpdateDelete(index) }
