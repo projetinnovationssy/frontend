@@ -6,7 +6,9 @@ import VIdeoItem from "../VIdeoItem";
 import EmptyList from "../EmptyList"
 import Spinner from "../Spinner";
 import Player from "../Player/Player";
-import PopUp from "../PopUp";
+import PopUp from "../PopUp/PopUp";
+
+
 
 class PublicVideoList extends React.Component{
 

@@ -1,13 +1,11 @@
 import React from "react";
-import styles from "./CoreBox.module.css"
 import { FaVideo } from 'react-icons/fa';
 import { GrClose } from "react-icons/gr"
 import Upstyles from "./Uploader.module.css"
-import FormTextField from "../Form/FormTextField";
-import FormSelectFiled from "../Form/FormSelectFiled";
-import FormInputFIle from "../Form/FormInputFIle";
+import FormTextField from "../../Form/FormTextField";
+import FormInputFIle from "../../Form/FormInputFIle";
 import axios from "axios";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 
 class Uploader extends React.Component {
     constructor(props) {
@@ -121,7 +119,7 @@ class Uploader extends React.Component {
             <FaVideo className={Upstyles.icon} />
             <h2 className={Upstyles.h2}>Drag and drop your {this.props.fileType} file to upload</h2>
             <p className={Upstyles.p}>Choose a mp3 file from your device</p>
-            <label className={styles.button} htmlFor="videoFile" >Select a file</label>
+            <label className={Upstyles.button} htmlFor="videoFile" >Select a file</label>
             <input type="file" onChange={this.onVideoSelect} ref = {this.videoFileRef} className={Upstyles.videoFile} id="videoFile" />
         </div>
     }
@@ -140,13 +138,3 @@ class Uploader extends React.Component {
 }
 
 export default Uploader;
-
-/*
-        this.visibility = React.createRef()
-
-let visibility = this.visibility.current.value
-            <FormSelectFiled label = "visibility" refence={this.visibility}>
-                <option value="true">Public</option>
-                <option value="false">Private</option>
-            </FormSelectFiled>
-*/

@@ -3,10 +3,10 @@ import VideoGalleryStyle from "./VideoGalleryStyle.module.css"
 import axios from "axios";
 import VideoGrid from "../VideoGrid";
 import VIdeoItem from "../VIdeoItem";
-import PopUp from "../PopUp";
-import EmptyList from "../EmptyList"
-import DeleteConfirmer from "../DeleteConfirmer";
-import Uploader from "../Uploader";
+import PopUp from "../PopUp/PopUp";
+import EmptyList from "../EmptyList";
+import DeleteConfirmer from "../PopUp/DeleteConfirmer"
+import Uploader from "../PopUp/Uploader";
 import Spinner from "../Spinner";
 import Player from "../Player/Player";
 class MyVideoList extends React.Component {
