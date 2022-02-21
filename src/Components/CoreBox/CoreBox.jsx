@@ -10,11 +10,12 @@ import {
 import MyVideoList from "./VideoGallery/MyVideoList";
 import PublicVideoList from "./VideoGallery/PublicVideoList";
 import Settings from "./Settings";
-
+import PopUp from "./PopUp/PopUp";
 class CoreBox extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            popUp: null,
         }
     }
 

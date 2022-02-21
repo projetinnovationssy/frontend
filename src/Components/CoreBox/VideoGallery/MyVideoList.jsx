@@ -27,6 +27,7 @@ class MyVideoList extends React.Component {
         this.onDeleteClick = this.onDeleteClick.bind(this)
         this.deleteFromState = this.deleteFromState.bind(this)
         this.getId = this.getId.bind(this)
+        this.getVideo =this.getVideo.bind(this)
     }
 
 
@@ -44,16 +45,27 @@ class MyVideoList extends React.Component {
         return list[index].id
     }
 
+    getVideo(index){
+        let list = this.state.videoList
+        return list[index]
+    }
+
     getPopUp() {
         if (this.state.popUp == "uploader") {
-            return <Uploader fileType="video" onClose={this.onPopUpClose} onUpload = {this.getOwnList }/>
+            return <Uploader purpose = "upload" fileType="video" onClose={this.onPopUpClose} onUpload = {this.getOwnList }/>
+        }
+        if (this.state.popUp == "uploder-update") {
+            return <Uploader purpose = "update" video = {this.getVideo(this.state.currentVideoIndex)} onClose={this.onPopUpClose} onUpload = {this.getOwnList }/>
         }
         if (this.state.popUp == "player") {
             return <Player src = {"http://127.0.0.1:8080/api/video/stream?video_id=" + this.state.currentVideoId} onClose = {this.onPopUpClose}/>
         }
         if(this.state.popUp == "deleter"){
             let video = this.state.videoList[this.state.currentVideoIndex]
-            return <DeleteConfirmer onDelete = {this.deleteFromState}  currentVideo = {video} onCancel = {this.onPopUpClose}/>
+            return <DeleteConfirmer 
+            title = {"Are you sure you want to delete this video?"}
+            description = {video.name}
+            onDelete = {this.deleteFromState}  currentVideo = {video} onCancel = {this.onPopUpClose}/>
         }
     }
 
@@ -71,6 +83,10 @@ class MyVideoList extends React.Component {
 
     onDeleteClick(currentVideoIndex){
         this.setState({popUp:"deleter", currentVideoIndex})
+    }
+
+    onUpdateDelete(currentVideoIndex){
+        this.setState({popUp:"uploder-update", currentVideoIndex})
     }
 
     componentDidMount() {
@@ -114,7 +130,7 @@ class MyVideoList extends React.Component {
                         <VIdeoItem videoObj = {value}
                             key={index}
                             onClick={()=>this.onVideoClick(this.getId(index))}
-                            edit={() => { console.log("ok") }}
+                            edit={() =>this.onUpdateDelete(index) }
                             delete={ ()=>this.onDeleteClick(index) } />
                     ))}
                 </VideoGrid>

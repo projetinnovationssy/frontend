@@ -94,7 +94,7 @@ class Uploader extends React.Component {
         this.props.onClose()
         this.props.onUpload()
     }
-    uploadForm(){
+    uploaderForm(purpose){
         if(this.state.uploadStarting){
             return <div className={Upstyles.spinnerContainer}>
                     <Spinner/>
@@ -103,7 +103,7 @@ class Uploader extends React.Component {
             return <div className={Upstyles.form}>
                 <FormTextField label = "Video name" refence={this.name}/>
                 <FormTextField label = "Video description" refence={this.description}/>
-                <FormInputFIle refence = {this.thumbnail} label = "Choose a thumbnail" id = "thmbnailId"/>
+                {purpose == "upload" ? <FormInputFIle refence = {this.thumbnail} label = "Choose a thumbnail" id = "thmbnailId"/> : null}
                 <button className={Upstyles.button} onClick={this.handleSubmit}>Confirm the upload</button>
             </div>
         }
@@ -124,16 +124,33 @@ class Uploader extends React.Component {
         </div>
     }
 
+    renderByPurpose(purpose){
+        if(purpose == "upload"){
+            if(this.state.videoFile == null)
+                return this.upLoadDragSelect()
+            else   
+                return this.uploaderForm(purpose)
+        }else if (purpose == "update"){
+            return this.uploaderForm(purpose)
+        }
+    }
+
     render() {
+        let purpose = this.props.purpose
+        let title
+        if (purpose == "upload"){
+            title = "Upload new " + this.props.fileType
+        }else if (purpose == "update"){
+            title = "Update the video: " + this.props.video.name
+        }
         return <div className={Upstyles.uploader}>
-            <div className={Upstyles.Uphead}>
-                <h1 className={Upstyles.h2}>Upload new {this.props.fileType}</h1>
-                <button className={Upstyles.closebutton} onClick={this.props.onClose} ><GrClose /></button>
-            </div>
-            {this.state.videoFile == null? 
-            this.upLoadDragSelect():
-            this.uploadForm()}
+        <div className={Upstyles.Uphead}>
+            <h1 className={Upstyles.h2}>{title}</h1>
+            <button className={Upstyles.closebutton} onClick={this.props.onClose} ><GrClose /></button>
         </div>
+            {this.renderByPurpose(purpose)}
+    </div>
+
     }
 }
 

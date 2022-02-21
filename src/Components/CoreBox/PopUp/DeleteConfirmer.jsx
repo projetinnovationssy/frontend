@@ -31,8 +31,8 @@ class DeleteConfirmer extends React.Component{
     }
     render(){
         return  <div className={styles.deleter}>
-                    <h1 className={styles.h2}>Are you sure you want to delete this video?</h1>
-                    <p className={styles.name}>{this.props.currentVideo.name}</p>
+                    <h1 className={styles.h2}>{this.props.title}</h1>
+                    <p className={styles.description}>{this.props.description}</p>
                     <div className={styles.container}>
                         <button className={styles.button} onClick = {this.props.onCancel}>Cancel</button>
                         <button className={styles.button+" "+styles.delete} onClick = {this.detete}>Yes, delete it</button>
