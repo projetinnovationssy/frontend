@@ -1,6 +1,4 @@
 import SignInForm from "./Components/Form/SignInForm";
-import ResetPasswordForm from "./Components/Form/ResetPasswordForm";
-import EmailResetPasswordForm from "./Components/Form/EmailResetPasswordForm";
 import SignUpForm from "./Components/Form/SignUpForm";
 import SideBar from "./Components/SideBar/SabeBar";
 import CoreBox from "./Components/CoreBox/CoreBox";
@@ -62,7 +60,6 @@ class App extends React.Component {
           <Routes>
             <Route path="/login" element={<SignInForm onLogin = {this.setToken}/>}/>
             <Route path="/signup" element={<SignUpForm onSignUp = {this.setToken}/>}/>
-            <Route path="/reset" element={<EmailResetPasswordForm onSignUp = {this.setToken}/>}/>
             <Route path="*" element = {<Navigate to="/login"/>} />
           </Routes>
       </div>
