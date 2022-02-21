@@ -38,6 +38,7 @@ class Settings extends React.Component {
                         }
                         else{
                             alert (response.data.description+"! you will be redirected to the login page")
+                            this.props.logoutCallback()
                         }
                     })
                     .catch((err)=>{console.log(err.response)})

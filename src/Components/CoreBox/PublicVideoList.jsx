@@ -44,7 +44,7 @@ class PublicVideoList extends React.Component{
                 'Authorization' : "Bearer " + token
             }
         }
-        axios.get(this.url, conf)
+        axios.post(this.url, conf)
         .then((response)=>{
             if (response.data != null){
                 let videoList = response.data.obj

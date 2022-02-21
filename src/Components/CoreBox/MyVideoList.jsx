@@ -40,10 +40,10 @@ class MyVideoList extends React.Component {
 
     getPopUp() {
         if (this.state.popUp == "uploader") {
-            return <Uploader fileType="video" onClose={this.onPopUpClose} />
+            return <Uploader fileType="video" onClose={this.onPopUpClose} onUpload = {this.getOwnList }/>
         }
         if (this.state.popUp == "player") {
-            return <Player src ="video.mp4" onClose = {this.onPopUpClose}/>
+            return <Player src ="http://127.0.0.1:8080/api/video/stream?video_id=5" onClose = {this.onPopUpClose}/>
         }
         if(this.state.popUp == "deleter"){
             let video = this.state.videoList[this.state.currentVideoIndex]

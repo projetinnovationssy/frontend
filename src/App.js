@@ -13,6 +13,7 @@ import {
   Navigate
 } from "react-router-dom";
 
+
 class App extends React.Component {
 
   constructor(props) {
@@ -22,7 +23,7 @@ class App extends React.Component {
     }
     this.setToken = this.setToken.bind(this)
     this.logout = this.logout.bind(this)
-    
+    console.log(localStorage.getItem("token"))
   }
 
   validateToken(token){
@@ -53,7 +54,7 @@ class App extends React.Component {
       if (this.validateToken(this.state.token)) {
         return <div className="App">
               <SideBar logoutCallback = {this.logout} />
-              <CoreBox />
+              <CoreBox logoutCallback = {this.logout}  />
         </div>
       }
     }

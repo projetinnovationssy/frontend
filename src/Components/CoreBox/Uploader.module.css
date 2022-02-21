@@ -46,12 +46,40 @@
     border-radius: 5px;
     border:#B6BDCB 1px dashed ;
     background-color: #F8F9FB;
+    animation: smoothdrag 0.5s reverse;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 350px;
 }
+.dragOn{
+    animation: smoothdrag 0.5s ;
+    border:#005FFC 4px dashed ;
+    background-color: #ebf3ff;
+}
+
+@keyframes smoothdrag {
+    from{
+        border:#B6BDCB 1px dashed ;
+        background-color: #F8F9FB;
+    }
+    to{
+        border:#005FFC 4px dashed ;
+        background-color: #ebf3ff;
+    }
+}
+
+.form{
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+
 .h2{
     font-size: 19px;
     font-family: 'Roboto';
@@ -85,7 +113,9 @@
     margin-bottom: 40px;
 }
 
-
+.videoFile{
+    display: none;
+}
 
 .EmtyBox{
     display: flex;
@@ -115,4 +145,11 @@
 }
 .button:active{
     transform: scale(1);
+}
+
+.spinnerContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px;
 }

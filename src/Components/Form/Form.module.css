@@ -73,7 +73,7 @@
     justify-content: space-between;
 }
 
-.groupForm input{
+.groupForm input, .groupForm select{
     margin: 10px 0;
     font-size: 20px;
     padding: 8px 5px;
@@ -86,9 +86,46 @@
     
 }
 
+.fileLabel{
+    border: 2px solid #cfcfcf;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: start;
+    transition: 0.2s;
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 10px 0;
+
+}
+
+.fileb{
+    background-color: #005FFC;
+    border-radius: 8px;
+    margin-right: 10px;
+    color: #f8f8f8;
+    padding: 12px;
+}
+.fileLabel:hover{
+    transform: scale(1.02);
+}
+.fileLabel:active{
+    transform: scale(1);
+}
 .groupForm2 .newLine{
     padding: 10px;
     text-align: center;
+}
+
+
+
+.hiden{
+    display: none;
 }
 
 .titleComment{

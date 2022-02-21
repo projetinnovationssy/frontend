@@ -29,7 +29,7 @@ class CoreBox extends React.Component {
                 <Route path="/login" element={<Navigate to='/myvideos' />} />
                 <Route path="/myvideos" element={<MyVideoList/>} />
                 <Route path="/videos" element={<PublicVideoList/>} />
-                <Route path="/settings" element={<Settings/>} />
+                <Route path="/settings" element={<Settings logoutCallback = {this.props.logoutCallback}/>} />
 
             </Routes>
 
