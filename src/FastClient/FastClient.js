@@ -19,6 +19,7 @@ class FastClient {
         this.updateurl = "/api/video/update"
         this.deleteaccounturl = "/api/user/delaccount"
         this.changepassurl = "/api/user/changepass"
+        this.destroyTokenUrl = "/signout"
         this.logout = logout
     }
 
@@ -189,6 +190,21 @@ class FastClient {
             else {
                 alert(response.data.description + "! you will be redirected to the login page")
                 this.logout()
+            }
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }
+
+    destroyToken(callback){
+        let url = this.url + this.destroyTokenUrl
+        axios.post(url,"",this.conf)
+        .then((response)=>{
+            if(response.data.obj == true){
+                callback()
+            }
+            else{
+                alert(response.data.description)
             }
         }).catch((error)=>{
             console.log(error)

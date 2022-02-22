@@ -27,15 +27,20 @@ class App extends React.Component {
     
   }
 
-  serverLogOut() {
-    return true
-  }
 
   logout() {
-    if (this.serverLogOut()) {
+    /*this.state.FastClient.destroyToken(()=>{
       localStorage.removeItem("token")
       this.setState({ token: null })
-    }
+    }) */
+    /***
+     * it looks like the api generates the same token every time for the user, so we can't ban it
+     * Api problem
+     */
+     
+    localStorage.removeItem("token")
+    this.setState({ token: null })
+    
   }
 
   setToken(token) {
