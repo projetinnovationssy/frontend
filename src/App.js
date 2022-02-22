@@ -19,11 +19,12 @@ class App extends React.Component {
     super(props)
     this.url = "http://localhost:8080"
     this.state = {
-      token: localStorage.getItem("token")
+      token: localStorage.getItem("token"),
+      FastClient : new FastClient(this.url, this.logout)
     }
     this.setToken = this.setToken.bind(this)
     this.logout = this.logout.bind(this)
-    this.FastClient = new FastClient(this.url, this.logout)
+    
   }
 
   serverLogOut() {
@@ -39,20 +40,20 @@ class App extends React.Component {
 
   setToken(token) {
     localStorage.setItem("token", token)
-    this.setState({ token })
+    this.setState({ token , FastClient : new FastClient(this.url, this.logout)})
   }
 
   Prerender() {
     if (this.state.token != null) {
         return <div className="App">
           <SideBar logoutCallback={this.logout} />
-          <CoreBox logoutCallback={this.logout} httpclient = {this.FastClient} />
+          <CoreBox logoutCallback={this.logout} httpclient = {this.state.FastClient} />
         </div>
     }
     return <div className="AppForm">
       <Routes>
-        <Route path="/login" element={<SignInForm onLogin={this.setToken} httpclient = {this.FastClient} />} />
-        <Route path="/signup" element={<SignUpForm onSignUp={this.setToken} httpclient = {this.FastClient} />} />
+        <Route path="/login" element={<SignInForm onLogin={this.setToken} httpclient = {this.state.FastClient} />} />
+        <Route path="/signup" element={<SignUpForm onSignUp={this.setToken} httpclient = {this.state.FastClient} />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </div>

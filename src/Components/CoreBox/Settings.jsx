@@ -19,36 +19,17 @@ class Settings extends React.Component {
         this.onPopUpClose = this.onPopUpClose.bind(this)
         this.ConfirmDelet = this.ConfirmDelet.bind(this)
         this.deleteaccount = this.deleteaccount.bind(this)
-        this.url = "http://localhost:8080/api/user/changepass"
+        
     }
+
     handleSubmit() {
-        const token = localStorage.getItem("token");
-        let conf = {
-            headers: {
-                'Authorization': "Bearer " + token
-            }
-        }
         let oldpassword = this.oldpassword.current.value
         let newpassword = this.newpassword.current.value
         let cpassword = this.cpassword.current.value
         if (oldpassword != null && newpassword != null && cpassword != null &&
             oldpassword != "" && newpassword != "" && cpassword != "") {
             if (newpassword == cpassword) {
-                let userData = new FormData()
-                userData.append("opass", oldpassword)
-                userData.append("npass", newpassword)
-                userData.append("cpass", cpassword)
-                axios.post(this.url, userData, conf)
-                    .then((response) => {
-                        if (response.data.obj == false) {
-                            alert(response.data.description)
-                        }
-                        else {
-                            alert(response.data.description + "! you will be redirected to the login page")
-                            this.props.logoutCallback()
-                        }
-                    })
-                    .catch((err) => { console.log(err.response) })
+                this.httpclient.changepass(oldpassword, newpassword, cpassword)
             }
             else alert("New possword and confirm new password do not match!")
         }

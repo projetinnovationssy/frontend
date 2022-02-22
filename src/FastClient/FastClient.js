@@ -18,6 +18,7 @@ class FastClient {
         this.uploadurl = "/api/video/upload"
         this.updateurl = "/api/video/update"
         this.deleteaccounturl = "/api/user/delaccount"
+        this.changepassurl = "/api/user/changepass"
         this.logout = logout
     }
 
@@ -173,6 +174,27 @@ class FastClient {
             console.log(error)
         })
     }
+
+    changepass(oldpassword, newpassword, cpassword){
+        let url = this.url + this.changepassurl
+        let userData = new FormData()
+        userData.append("opass", oldpassword)
+        userData.append("npass", newpassword)
+        userData.append("cpass", cpassword)
+        axios.post(url, userData, this.conf)
+        .then((response)=>{
+            if (response.data.obj == false) {
+                alert(response.data.description)
+            }
+            else {
+                alert(response.data.description + "! you will be redirected to the login page")
+                this.logout()
+            }
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }
+    
 }
 
 export default FastClient
